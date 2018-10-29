@@ -1,0 +1,5 @@
+﻿<Properties>
+  <WatchEntry0 value="strFieldValue" />
+  <WatchEntry1 value="objFieldValue.SwfComboBox(&quot;swfname:=outputCmb&quot;).GetROProperty(&quot;text&quot;)" />
+  <WatchEntry2 value="value" />
+</Properties>

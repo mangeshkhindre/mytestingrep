@@ -1,0 +1,6 @@
+﻿<Properties>
+  <WatchEntry0 value="strItemName" />
+  <WatchEntry1 value="intTabCount" />
+  <WatchEntry2 value="strTabs" />
+  <WatchEntry3 value="intTabCount=1 and strTabs=&quot;Details&quot;" />
+</Properties>

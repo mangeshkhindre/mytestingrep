@@ -1,0 +1,53 @@
+EH                                20151222   ENV1     
+TH T100099-002TRAN1    
+TPI1.00 01                              N
+0001  3.20 W
+00ANN
+01A01                                                                                                              A100000004            70250.00  4.50036005                                                                                                                                                                
+02A1456 Peachtree Street                             Atlanta                            GA30360      1F1                                                                                1984
+02B  05                                                                                1                                                            1        
+02CAndy BASE America                                           
+02CAmy America                                                 
+02D               0.00           0.00           0.00           0.0013                                                                                            0.00
+03ABW999603333Andy                               BASE                               America                                           35    0 50060222219790706                                                                                
+03AQZ500602222Amy                                                                   America                                           35    0 99960333319790706                                                                                
+03C999603333ZG4321 Cul de Sac ST                                Someplace                          MA02723      0                                                    
+03C500602222ZG4321 Cul de Sac ST                                Someplace                          MA02723      0                                                    
+05H999603333126        1493.00
+05H999603333101          35.00
+05H999603333114         163.00
+05H999603333226         355.95
+05H999603333201          35.00
+05H999603333214         163.00
+05I99960333320        3850.00
+05I50060222220        8200.00
+05I999603333M3         250.00
+06C99960333303                                                                                                                                                           2475.00                                                                                          
+06C999603333F3                                                                                                                                                          19048.00                                                                                          
+06L999603333I RELENTLESS BANK                                                                                                     200021                                  46.22 34        1554.00N  NN  
+06L999603333R ALLEN BANK CARD                                                                                                     435617                                 133.00 36        4665.00N  NN  
+06L999603333R BURSTING CREDIT                                                                                                     171442                                  27.00 51        1357.00N  NN  
+06L999603333R CAPITAL BANK                                                                                                        529115                                  10.00  3          29.00N  NN  
+06L999603333R PRIME VISA                                                                                                          411711911                               40.00 12         450.00N  NN  
+06L999603333M BEST EVER MORTGAGE                                                                                                  502088                                1691.00125      210279.00N  NN  
+06L999603333M CALLABLE MORTGAGE                                                                                                   757570                                1671.00126      210027.00N  NN  
+07A           0.00           0.00           0.00      210279.00        1200.00         800.00           0.00           0.00           0.00           0.00           0.00
+08A999603333 NN      01YY   
+08A500602222 NN      01YY   
+10A999603333N1                              M
+10A500602222N1                              F
+10B Admin User                                                                    Ellie Mae, Inc.                    4140 Dublin Blvd.                                                     Dublin                             CA94568    
+10R9996033331 
+10R5006022222 
+00070 3.20 
+99B F1       83000.00       01   Mary Appraiser                                                                                                  
+ADSLoanOriginatorID                                                                     
+ADSLoanOriginationCompanyID                                                             
+ADSSupervisoryAppraiserLicenseNumber  123456789abcdefghijkl                             
+ADSAppraisalIdentifier                                                                  
+00011 3.20 
+LNC1 01                 N  N  0.000                      N                  0.000   0.000  
+PID                                                  
+PCH   N01N N 
+TT TRAN1    
+ET ENV1     

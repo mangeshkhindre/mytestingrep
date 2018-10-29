@@ -1,0 +1,446 @@
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'@defgroup BIZ_Forms_RequestforCopyofTaxReturn BIZ_Forms_RequestforTranscriptofTax
+'
+' List of functions here
+'@code
+'   Function BIZ_RequestforCopyofTaxReturn_SetAllField(strFormName, strRowID)
+'   Function BIZ_Common_RequestforCopyofTaxReturn_SetAllField(objParentObject, strRowID)
+'   Function BIZ_RequestforTranscriptofTax_SetAllField(strFormName, strRowID)
+'   Function BIZ_Common_RequestforTranscriptofTax_SetAllField(objParentObject, strRowID)
+'   Function BIZ_Verify_RequestforCopyofTaxReturn_TaxDetail(strRowID)
+'   Function BIZ_Verify_RequestforTranscriptofTax_TaxDetail(strRowID)
+'   Function BIZ_RequestforTranscripOfTax_NewFormNUpdateNSaveDetails(strFormName)
+'@endcode
+' @{
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'This function is for set fields in Request for Copy of tax Return
+'@code
+'    BIZ_RequestforCopyofTaxReturn_SetAllField(strFormName, strRowID)
+'@endcode
+'@param strFormName The form's name
+'@param strRowID The numeric or string unique ID that used to find the line in the data spreadsheet
+
+Function BIZ_RequestforCopyofTaxReturn_SetAllField(strFormName, strRowID)
+
+    FRM_Logger_ReportInfoEvent strFormName, "Set all fields using row id '"&strRowID, null
+   
+	Set objRequestPage = SwfWindow("swfname:=MainForm").Page("title:=.*","index:=0")
+	
+	BIZ_Common_RequestforCopyofTaxReturn_SetAllField objRequestPage, strRowID
+	
+	Set objRequestPage = Nothing
+	 	
+End Function
+
+
+
+'This function is for set fields in Request for Copy of tax Return
+'@code
+'    BIZ_Common_RequestforCopyofTaxReturn_SetAllField(objParentObject, strRowID)
+'@endcode
+'@param objParentObject the parent object
+'@param strRowID The numeric or string unique ID that used to find the line in the data spreadsheet
+
+Function BIZ_Common_RequestforCopyofTaxReturn_SetAllField(objParentObject, strRowID)
+
+	Set objData = FRM_DS_GetTestData("Forms_Request", "RequestforCopyofTaxReturn", strRowID)
+	
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0101_TaxFormIsfor")) Then
+		GUI_WebList_Select objParentObject.WebList("html id:=DropdownBox1"), FRM_DS_GetValue(objData, "AR0101_TaxFormIsfor")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0102_FirstName")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X2"), FRM_DS_GetValue(objData, "AR0102_FirstName")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0103_LastName")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=txt1aLName"), FRM_DS_GetValue(objData, "AR0103_LastName")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0104_1stSSN")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X4"), FRM_DS_GetValue(objData, "AR0104_1stSSN")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0106_SpouseFirstName")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X6"), FRM_DS_GetValue(objData, "AR0106_SpouseFirstName")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0107_SpouseLastName")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=txt2aLName"), FRM_DS_GetValue(objData, "AR0107_SpouseLastName")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0105_2ndSocialSecurity")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X5"), FRM_DS_GetValue(objData, "AR0105_2ndSocialSecurity")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0139_FirstName")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X39"), FRM_DS_GetValue(objData, "AR0139_FirstName")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0140_LastName")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X40"), FRM_DS_GetValue(objData, "AR0140_LastName")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0135_Address")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X35"), FRM_DS_GetValue(objData, "AR0135_Address")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0136_City")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X36"), FRM_DS_GetValue(objData, "AR0136_City")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0137_State")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X37"), FRM_DS_GetValue(objData, "AR0137_State")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0138_Zip")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X38"), FRM_DS_GetValue(objData, "AR0138_Zip")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0141_Address")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X41"), FRM_DS_GetValue(objData, "AR0141_Address")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0142_City")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X42"), FRM_DS_GetValue(objData, "AR0142_City")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0143_State")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X43"), FRM_DS_GetValue(objData, "AR0143_State")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0144_Zip")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X44"), FRM_DS_GetValue(objData, "AR0144_Zip")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0108_Name")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X8"), FRM_DS_GetValue(objData, "AR0108_Name")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0109_Name(con't)")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X9"), FRM_DS_GetValue(objData, "AR0109_Name(con't)")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0145_Phone")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X45"), FRM_DS_GetValue(objData, "AR0145_Phone")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0110_Address")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X10"), FRM_DS_GetValue(objData, "AR0110_Address")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0111_City")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X11"), FRM_DS_GetValue(objData, "AR0111_City")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0112_State")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X12"), FRM_DS_GetValue(objData, "AR0112_State")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0113_Zip")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X13"), FRM_DS_GetValue(objData, "AR0113_Zip")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0124_RequestFormName")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X24"), FRM_DS_GetValue(objData, "AR0124_RequestFormName")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0125_EndDate1")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X25"), FRM_DS_GetValue(objData, "AR0125_EndDate1")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0126_EndDate2")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X26"), FRM_DS_GetValue(objData, "AR0126_EndDate2")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0129_EndDate3")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X29"), FRM_DS_GetValue(objData, "AR0129_EndDate3")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0130_EndDate4")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X30"), FRM_DS_GetValue(objData, "AR0130_EndDate4")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0153_EndDate5")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X53"), FRM_DS_GetValue(objData, "AR0153_EndDate5")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0154_EndDate6")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X54"), FRM_DS_GetValue(objData, "AR0154_EndDate6")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0155_EndDate7")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X55"), FRM_DS_GetValue(objData, "AR0155_EndDate7")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0156_EndDate8")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X56"), FRM_DS_GetValue(objData, "AR0156_EndDate8")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0152_Cost")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X52"), FRM_DS_GetValue(objData, "AR0152_Cost")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0131_taxNum")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X31"), FRM_DS_GetValue(objData, "AR0131_taxNum")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0114_Chkbox")) Then
+		GUI_WebCheckbox_Set objParentObject.WebCheckBox("html id:=__cid_CheckBox2_Ctrl"), FRM_DS_GetValue(objData, "AR0114_Chkbox")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0128_Title")) Then
+	    UTIL_Win_SendKey "{TAB}"
+		GUI_WinEdit_Set objParentObject.WinEdit("micClass:=WinEdit", "index:=0"), FRM_DS_GetValue(objData, "AR0128_Title")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0127_PhoneNum")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X27"), FRM_DS_GetValue(objData, "AR0127_PhoneNum")
+	End If
+	
+	Set objData = Nothing
+		
+End Function
+
+
+
+'This function is for set fields in Request for Transcript of tax
+'@code
+'    BIZ_RequestforTranscriptofTax_SetAllField(strFormName, strRowID)
+'@endcode
+'@param strRowID The form's name
+'@param strRowID The numeric or string unique ID that used to find the line in the data spreadsheet
+
+Function BIZ_RequestforTranscriptofTax_SetAllField(strFormName, strRowID)
+
+    FRM_Logger_ReportInfoEvent strFormName, "Set all fields using row id '"&strRowID, null
+   
+	Set objRequestPage = SwfWindow("swfname:=MainForm").Page("title:=.*","index:=0")
+	
+	BIZ_Common_RequestforTranscriptofTax_SetAllField objRequestPage, strRowID
+	
+	Set objRequestPage = Nothing
+	 	
+End Function
+
+
+
+'This function is for set fields in Request for Transcript of tax
+'@code
+'    BIZ_Common_RequestforTranscriptofTax_SetAllField(objParentObject, strRowID)
+'@endcode
+'@param objParentObject the parent object
+'@param strRowID The numeric or string unique ID that used to find the line in the data spreadsheet
+
+Function BIZ_Common_RequestforTranscriptofTax_SetAllField(objParentObject, strRowID)
+
+	Set objData = FRM_DS_GetTestData("Forms_Request", "RequestforTranscriptofTax", strRowID)
+	
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0101_TaxFormIsfor")) Then
+		GUI_WebList_Select objParentObject.WebList("html id:=DropdownBox1"), FRM_DS_GetValue(objData, "IR0101_TaxFormIsfor")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0102_FirstName")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X2"), FRM_DS_GetValue(objData, "IR0102_FirstName")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0103_LastName")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=txt1aLName"), FRM_DS_GetValue(objData, "IR0103_LastName")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0104_1stSSN")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X4"), FRM_DS_GetValue(objData, "IR0104_1stSSN")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0106_SpouseFirstName")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X6"), FRM_DS_GetValue(objData, "IR0106_SpouseFirstName")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0107_SpouseLastName")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=txt2aLName"), FRM_DS_GetValue(objData, "IR0107_SpouseLastName")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0105_2ndSocialSecurity")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X5"), FRM_DS_GetValue(objData, "IR0105_2ndSocialSecurity")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0139_FirstName")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X39"), FRM_DS_GetValue(objData, "IR0139_FirstName")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0140_LastName")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X40"), FRM_DS_GetValue(objData, "IR0140_LastName")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0135_Address")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X35"), FRM_DS_GetValue(objData, "IR0135_Address")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0136_City")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X36"), FRM_DS_GetValue(objData, "IR0136_City")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0137_State")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X37"), FRM_DS_GetValue(objData, "IR0137_State")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0138_Zip")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X38"), FRM_DS_GetValue(objData, "IR0138_Zip")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0141_Address")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X41"), FRM_DS_GetValue(objData, "IR0141_Address")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0142_City")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X42"), FRM_DS_GetValue(objData, "IR0142_City")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0143_State")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X43"), FRM_DS_GetValue(objData, "IR0143_State")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0144_Zip")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X44"), FRM_DS_GetValue(objData, "IR0144_Zip")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0108_Name")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X8"), FRM_DS_GetValue(objData, "IR0108_Name")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0109_Name(con't)")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X9"), FRM_DS_GetValue(objData, "IR0109_Name(con't)")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0145_Phone")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X45"), FRM_DS_GetValue(objData, "IR0145_Phone")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0110_Address")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X10"), FRM_DS_GetValue(objData, "IR0110_Address")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0111_City")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X11"), FRM_DS_GetValue(objData, "IR0111_City")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0112_State")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X12"), FRM_DS_GetValue(objData, "IR0112_State")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0113_Zip")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X13"), FRM_DS_GetValue(objData, "IR0113_Zip")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0124_RequestFormName")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X24"), FRM_DS_GetValue(objData, "IR0124_RequestFormName")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0146_ReturnTranscript")) Then
+		GUI_WebCheckbox_Set objParentObject.WebCheckBox("html id:=__cid_CheckBox1_Ctrl"), FRM_DS_GetValue(objData, "IR0146_ReturnTranscript")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0147_AccountTranscript")) Then
+		GUI_WebCheckbox_Set objParentObject.WebCheckBox("html id:=__cid_CheckBox2_Ctrl"), FRM_DS_GetValue(objData, "IR0147_AccountTranscript")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0148_RecordofAccount")) Then
+		GUI_WebCheckbox_Set objParentObject.WebCheckBox("html id:=__cid_CheckBox3_Ctrl"), FRM_DS_GetValue(objData, "IR0148_RecordofAccount")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0149_VerificationofNonfilling")) Then
+		GUI_WebCheckbox_Set objParentObject.WebCheckBox("html id:=__cid_CheckBox8_Ctrl"), FRM_DS_GetValue(objData, "IR0149_VerificationofNonfilling")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0150_FormTranscript")) Then
+		GUI_WebCheckbox_Set objParentObject.WebCheckBox("html id:=__cid_CheckBox6_Ctrl"), FRM_DS_GetValue(objData, "IR0150_FormTranscript")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0125_EndDate1")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X25"), FRM_DS_GetValue(objData, "IR0125_EndDate1")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0126_EndDate2")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X26"), FRM_DS_GetValue(objData, "IR0126_EndDate2")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0129_EndDate3")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X29"), FRM_DS_GetValue(objData, "IR0129_EndDate3")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0130_EndDate4")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X30"), FRM_DS_GetValue(objData, "IR0130_EndDate4")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0128_Title")) Then
+	    'in some environments script can't interact with WinEdit until it is visible. Clicking on phone webedit makes our WinEdit visible
+		objParentObject.WebEdit("html id:=l_IRS4506X27").Click
+		Wait 2
+		GUI_WinEdit_Set objParentObject.WinEdit("micClass:=WinEdit", "index:=0"), FRM_DS_GetValue(objData, "IR0128_Title")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0127_PhoneNum")) Then
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_IRS4506X27"), FRM_DS_GetValue(objData, "IR0127_PhoneNum")
+	End If
+	
+	Set objData = Nothing
+		
+End Function
+
+
+
+'This function is for verify fields in Request for Copy of tax Return
+'@code
+'    BIZ_Verify_RequestforCopyofTaxReturn_TaxDetail(strRowID)
+'@endcode
+'@param strRowID The numeric or string unique ID that used to find the line in the data spreadsheet
+
+Function BIZ_Verify_RequestforCopyofTaxReturn_TaxDetail(strRowID)
+
+    FRM_Logger_ReportInfoEvent "Request for Copy of Tax Return", "Verify Request for Copy of Tax Return data using Row Id '"&strRowID&"'", null
+
+    Set objParentObject = SwfWindow("swfname:=MainForm").Page("title:=.*","index:=0")
+	Set objData = FRM_DS_GetTestData("Forms_Request", "RequestforCopyofTaxReturn", strRowID)
+	
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0101_TaxFormIsfor")) Then
+		GUI_Object_ValidateProperty objParentObject.WebList("html id:=DropdownBox1"), "selection", FRM_DS_GetValue(objData, "AR0101_TaxFormIsfor"), "TaxFormIsfor"
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0102_FirstName")) Then
+		GUI_Object_ValidateValue objParentObject.WebEdit("html id:=l_IRS4506X2"), FRM_DS_GetValue(objData, "AR0102_FirstName"), "AR0102_FirstName"
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0103_LastName")) Then
+		GUI_Object_ValidateValue objParentObject.WebEdit("html id:=txt1aLName"), FRM_DS_GetValue(objData, "AR0103_LastName"), "AR0103_LastName"
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0104_1stSSN")) Then
+		GUI_Object_ValidateValue objParentObject.WebEdit("html id:=l_IRS4506X4"), FRM_DS_GetValue(objData, "AR0104_1stSSN"), "AR0104_1stSSN"
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0124_RequestFormName")) Then
+		GUI_Object_ValidateValue objParentObject.WebEdit("html id:=l_IRS4506X24"), FRM_DS_GetValue(objData, "AR0124_RequestFormName"), "AR0124_RequestFormName"
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0125_EndDate1")) Then
+		GUI_Object_ValidateValue objParentObject.WebEdit("html id:=l_IRS4506X25"), FRM_DS_GetValue(objData, "AR0125_EndDate1"), "AR0125_EndDate1"
+	End If
+
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0152_Cost")) Then
+		GUI_Object_ValidateValue objParentObject.WebEdit("html id:=l_IRS4506X52"), FormatNumber(FRM_DS_GetValue(objData, "AR0152_Cost"), 2), "AR0152_Cost"
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0131_taxNum")) Then
+		GUI_Object_ValidateValue objParentObject.WebEdit("html id:=l_IRS4506X31"), FRM_DS_GetValue(objData, "AR0131_taxNum"), "AR0131_taxNum"
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AR0114_Chkbox")) Then
+        FRM_VerifyTrue GUI_WebCheckbox_IsChecked(objParentObject.WebCheckBox("html id:=__cid_CheckBox2_Ctrl")), "Verify AR0114_Chkbox", "The checkbox is checked"
+	End If
+	
+	Set objData = Nothing
+    Set objParentObject = Nothing
+		
+End Function
+
+
+
+'This function is for verify fields in Request for Transcript of tax
+'@code
+'    BIZ_Verify_RequestforTranscriptofTax_TaxDetail(strRowID)
+'@endcode
+'@param strRowID The numeric or string unique ID that used to find the line in the data spreadsheet
+
+Function BIZ_Verify_RequestforTranscriptofTax_TaxDetail(strRowID)
+    
+    FRM_Logger_ReportInfoEvent "Request for Transcript of Tax", "Verify Request for Transcript of Tax data using Row Id '"&strRowID&"'", null
+
+    Set objParentObject = SwfWindow("swfname:=MainForm").Page("title:=.*","index:=0")
+	Set objData = FRM_DS_GetTestData("Forms_Request", "RequestforTranscriptofTax", strRowID)
+	
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0101_TaxFormIsfor")) Then
+		GUI_Object_ValidateProperty objParentObject.WebList("html id:=DropdownBox1"), "selection", FRM_DS_GetValue(objData, "IR0101_TaxFormIsfor"), "IR0101_TaxFormIsfor"
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0102_FirstName")) Then
+		GUI_Object_ValidateValue objParentObject.WebEdit("html id:=l_IRS4506X2"), FRM_DS_GetValue(objData, "IR0102_FirstName"), "IR0102_FirstName"
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0103_LastName")) Then
+		GUI_Object_ValidateValue objParentObject.WebEdit("html id:=txt1aLName"), FRM_DS_GetValue(objData, "IR0103_LastName"), "IR0103_LastName"
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0104_1stSSN")) Then
+		GUI_Object_ValidateValue objParentObject.WebEdit("html id:=l_IRS4506X4"), FRM_DS_GetValue(objData, "IR0104_1stSSN"), "IR0104_1stSSN"
+	End If
+	
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0124_RequestFormName")) Then
+		GUI_Object_ValidateValue objParentObject.WebEdit("html id:=l_IRS4506X24"), FRM_DS_GetValue(objData, "IR0124_RequestFormName"), "IR0124_RequestFormName"
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0146_ReturnTranscript")) Then
+        FRM_VerifyTrue GUI_WebCheckbox_IsChecked(objParentObject.WebCheckBox("html id:=__cid_CheckBox1_Ctrl")), "Verify IR0146_ReturnTranscript", "The checkbox is checked"
+	End If
+	
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0125_EndDate1")) Then
+		GUI_Object_ValidateValue objParentObject.WebEdit("html id:=l_IRS4506X25"), FRM_DS_GetValue(objData, "IR0125_EndDate1"), "IR0125_EndDate1"
+	End If
+	
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0128_Title")) Then
+	    'in some environments script can't interact with WinEdit until it is visible. Clicking on phone webedit makes our WinEdit visible 
+	    objParentObject.WebEdit("html id:=l_IRS4506X27").Click
+		Wait 2
+		GUI_Object_ValidateTrimText objParentObject.WinEdit("micClass:=WinEdit", "index:=0"), FRM_DS_GetValue(objData, "IR0128_Title"), "IR0128_Title"
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "IR0127_PhoneNum")) Then
+		GUI_Object_ValidateValue objParentObject.WebEdit("html id:=l_IRS4506X27"), FRM_DS_GetValue(objData, "IR0127_PhoneNum"), "IR0127_PhoneNum"
+	End If
+	
+	Set objData = Nothing
+    Set objParentObject = Nothing
+		
+End Function
+
+
+
+'This function is used to Copy the Borrower, Co-Borrower Details 
+'@code
+'    Function BIZ_RequestforTranscripOfTax_NewFormNUpdateNSaveDetails(strFormName)
+'@endcode
+'@param strFormName The name of the form
+
+Function BIZ_RequestforTranscripOfTax_NewFormNUpdateNSaveDetails(strFormName)
+	FRM_Logger_ReportInfoEvent "Request for Transcript of Tax "& strFormName, "Create a New Form And Update the Details for Form "&strFormName, null
+    	
+	BIZ_Forms_Open "Request for Transcript of Tax"
+
+	GUI_SwfObject_Click SwfWindow("swfname:=MainForm").SwfObject("swfname:=btnNew")
+
+	Set RequestForCopyOfTranscriptFrom = SwfWindow("swfname:=MainForm").Page("index:=0")
+	GUI_WebList_Select RequestForCopyOfTranscriptFrom.WebList("html id:=DropdownBox1"), "Borrower"
+	GUI_WebButton_Click RequestForCopyOfTranscriptFrom.WebButton("html id:=Button1")
+	GUI_WebList_Select RequestForCopyOfTranscriptFrom.WebList("html id:=DropdownBox1"), "Co-Borrower"
+	GUI_WebButton_Click RequestForCopyOfTranscriptFrom.WebButton("html id:=Button1")
+
+	GUI_WebList_Select RequestForCopyOfTranscriptFrom.WebList("html id:=DropdownBox1"), "Both"
+	GUI_WebButton_Click RequestForCopyOfTranscriptFrom.WebButton("html id:=Button1")
+End Function
+
+'@}

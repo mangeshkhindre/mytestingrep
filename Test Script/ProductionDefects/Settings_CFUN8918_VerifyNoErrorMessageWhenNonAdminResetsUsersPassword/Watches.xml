@@ -1,0 +1,5 @@
+﻿<Properties>
+  <WatchEntry0 value="strTitle" />
+  <WatchEntry1 value="strNewUserPwd" />
+  <WatchEntry2 value="strNewUserId" />
+</Properties>

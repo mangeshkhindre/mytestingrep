@@ -1,0 +1,5 @@
+﻿<Properties>
+  <WatchEntry0 value="intCount" />
+  <WatchEntry1 value="count" />
+  <WatchEntry2 value="strRowID" />
+</Properties>

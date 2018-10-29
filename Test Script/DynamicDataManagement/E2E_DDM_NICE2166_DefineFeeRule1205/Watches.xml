@@ -1,0 +1,8 @@
+﻿<Properties>
+  <WatchEntry0 value="arrTable" />
+  <WatchEntry1 value="arrValue(intIteration)" />
+  <WatchEntry2 value="strTableName" />
+  <WatchEntry3 value="borrStateTax" />
+  <WatchEntry4 value="arrExpectedValueSet(0)" />
+  <WatchEntry5 value="round(borrStateTax,2)" />
+</Properties>

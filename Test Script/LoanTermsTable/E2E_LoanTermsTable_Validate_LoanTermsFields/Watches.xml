@@ -1,0 +1,6 @@
+﻿<Properties>
+  <WatchEntry0 value="FRM_DS_GetValue(objData, &quot;NEWHUD.X7&quot;)" />
+  <WatchEntry1 value="FRM_DS_GetValue(objDataInput, &quot;1177_InterestOnly&quot;)" />
+  <WatchEntry2 value="FRM_DS_GetValue(objDataInput, &quot;1177_InterestOnly&quot;)" />
+  <WatchEntry3 value="FRM_DS_GetValue(objDataInput, &quot;608_AmortizationFixed&quot;)" />
+</Properties>

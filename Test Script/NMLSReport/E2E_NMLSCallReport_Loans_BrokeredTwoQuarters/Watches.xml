@@ -1,0 +1,4 @@
+﻿<Properties>
+  <WatchEntry0 value="intNumberOfLoans" />
+  <WatchEntry1 value="intReqLoanNumber" />
+</Properties>

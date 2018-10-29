@@ -1,0 +1,40 @@
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'@defgroup BIZ_Settings_FundingTemplates BIZ_Settings_FundingTemplates
+'
+' List of functions here
+' @code
+' 	Function BIZ_FundingTemplate_DeleteExisting(strFundingTemplate)
+'@endcode
+' @{
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+' Added by Sameer Gupta as of 6th Jan 2016
+'This function is used to delete existing Funding Template row from the list
+'@code
+'    Function BIZ_FundingTemplate_DeleteExisting(strFundingTemplate)
+'@endcode
+'@param strFundingTemplate - Funding Template name
+
+Function BIZ_FundingTemplate_DeleteExisting(strFundingTemplate)
+
+	FRM_Logger_ReportInfoEvent "Delete Funding Template", "Delete Funding Template with name " & strFundingTemplate & "", null
+
+	Dim objFundingTemplateList, scrollbarFundingTemplate, exist
+	Set objFundingTemplateList = SwfWindow("swfname:=MainForm").SwfWindow("swfname:=SetUpContainer").SwfObject("swfname:=lvwTemplates")
+	Set scrollbarFundingTemplate = SwfWindow("swfname:=MainForm").SwfWindow("swfname:=SetUpContainer").SwfScrollBar("swfname:=vPanelScrollBar")
+
+	exist = GUI_List_ClickRow (objFundingTemplateList, scrollbarFundingTemplate, "Name", strFundingTemplate, True, False, False, "Single")
+
+	If exist  Then
+
+        GUI_Object_Click SwfWindow("swfname:=MainForm").SwfWindow("swfname:=SetUpContainer").SwfObject("swfname:=stdIconBtnDelete"), "SwfObject", "Delete Funding Template"
+		GUI_Dialog_Encompass_OK ""
+
+	End If
+	
+	Set objFundingTemplateList = Nothing
+	Set scrollbarFundingTemplate = Nothing
+
+End Function
+
+'@}

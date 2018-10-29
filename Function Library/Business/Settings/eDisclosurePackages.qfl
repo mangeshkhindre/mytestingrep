@@ -1,0 +1,39 @@
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'@defgroup BIZ_Settings_eDisclosurePackages BIZ_Settings_eDisclosurePackages
+'
+' List of functions here
+' @code
+'	Function BIZ_eDisclosurePackages_SettingConsents(strRowID)
+'@endcode
+' @{
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+'This function is used to setting Consents section in eDisclosure Packages page.
+'@code
+'    BIZ_eDisclosurePackages_SettingConsents(strRowID)
+'@endcode
+'@param strRowID The numeric or string unique ID that used to find the line in the data spreadsheet
+
+Function BIZ_eDisclosurePackages_SettingConsents(strRowID)
+ 
+    FRM_Logger_ReportInfoEvent "Setting Consents", "Setting Consents using Row Id '"&strRowID&"' in the Setttings_eDisclosurePackages datasheet", null
+    
+	Dim objSettings, objData
+    Set objSettings = SwfWindow("swfname:=MainForm").SwfWindow("swfname:=SetUpContainer")
+    Set objData = FRM_DS_GetTestData("Setttings_eDisclosurePackages", "SettingConsents", strRowID)
+    
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "ConsentsRequired")) Then
+        ConsentsRequired = FRM_DS_GetValue(objData, "ConsentsRequired")
+        GUI_SwfComboBox_Select objSettings.SwfComboBox("swfname:=cboConsent"), ConsentsRequired
+    End If
+    
+    If GUI_Object_IsEnabled(objSettings.SwfObject("swfname:=stdIconBtnSave")) Then
+        GUI_Object_Click objSettings.SwfObject("swfname:=stdIconBtnSave"), "SwfObject", "Save Setting Consents"
+    End If
+    
+    Set objSettings = Nothing
+    Set objData = Nothing
+    
+End Function
+
+'@}

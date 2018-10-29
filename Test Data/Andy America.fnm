@@ -1,0 +1,37 @@
+EH                                20110107   ENV1     
+TH T100099-002TRAN1    
+TPI1.00 011002368550                    R
+0001  3.20 W
+00AYN
+01A01                                                                                                                                   150000.00  6.00036005                                                                                                                                                                
+02A4321 Cul de Sac Street                            Fall River                         MA02723      1F1SEE PRELIMINARY TITLE REPORT                                                        
+02B  16                                                                                1Joint Tenancy                                               1        
+02CAndy America                                                
+02CAmy America                                                 
+02E02      100000.00                                                                                
+03ABW500603333Andy                                                                  America                                1234423144 68  M 0Y50060222219420323jonas@elliemae.com                                                              
+03AQZ500602222Amy                                                                   America                                1234423144 63  M 0Y50060333319470429jonas@elliemae.com                                                              
+03C500603333ZG4321 Cul de Sac Street                            Fall River                         MA02723    R10                                                    
+03C500603333F480506BX00046327                                                                                   0                                                    
+03C500602222ZG4321 Cul de Sac Street                            Fall River                         MA02723    R10                                                    
+05H500603333226         899.33
+05I50060333320        6000.00
+05I50060222220        5000.00
+07A      250000.00           0.00           0.00           0.00         750.00           0.00           0.00           0.00           0.00           0.00           0.00
+08A500603333NNNNNNNNN01YY101
+08A500602222NNNNNNNNN05YN101
+10A500603333N                               M
+10A500602222N                                
+10BFJonas Moe                                                           9252277000Ellie Mae, Inc. - Jonas            4140 Dublin Blvd Suite 300                                            Dublin                             CA94568    
+10R5006033336 
+10R5006022226 
+00070 3.20 
+99BN        250000.00       01                                                                                                                   
+ADSLoanOriginatorID                                                                     
+ADSLoanOriginationCompanyID                                                             
+00011 3.20 
+LNC1 01                 N  N  0.000                      N                  0.000   0.000  
+PID                                                  
+PCH360N01N   
+TT TRAN1    
+ET ENV1     

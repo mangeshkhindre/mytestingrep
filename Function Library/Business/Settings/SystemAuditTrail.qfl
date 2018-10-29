@@ -1,0 +1,119 @@
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'@defgroup BIZ_Settings_SystemAuditTrail BIZ_Settings_SystemAuditTrail
+'
+' List of functions here
+'@code
+'	Function BIZ_SystemAuditTrail_Search()
+'   Function BIZ_SystemAuditTrail_GetSearchResultNumber(strCategory, strAction, strBoLastName)
+'   Function BIZ_SystemAuditTrail_VerifyModifiedInColumnBasedOnLoanNumber()
+'	Function BIZ_SystemAuditTrail_VerifyBySearch(strPersonaName, strAction, StrSearchColumn)
+'@endcode
+'
+'@{
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+'This function is used to search system audit trail
+'@code
+'    BIZ_SystemAuditTrail_Search()
+'@endcode
+'@param strCategory - The search category
+'@param strAction - The search trail action
+'@param strCoLastName - The search trail last name
+
+Function BIZ_SystemAuditTrail_Search(strCategory, strAction, strBoLastName)
+
+	FRM_Logger_ReportInfoEvent "System Administrator;System Audit Trail", "Search system audit trail", null
+    
+    Dim objSettingWindow
+    Set objSettingWindow = SwfWindow("swfname:=MainForm").SwfWindow("swfname:=SetUpContainer")
+    If Not UTIL_String_IsEmpty(strCategory) Then
+		GUI_SwfComboBox_Select objSettingWindow.SwfComboBox("swfname:=cmbCategory"), strCategory
+	End If
+	If Not UTIL_String_IsEmpty(strAction) Then
+		GUI_SwfComboBox_Select objSettingWindow.SwfComboBox("swfname:=cmbAction"), strAction
+	End If
+	If Not UTIL_String_IsEmpty(strBoLastName) Then
+		GUI_SwfEdit_Set objSettingWindow.SwfEdit("swfname:=txtObject"), strBoLastName
+	End If
+	GUI_SwfButton_Click objSettingWindow.SwfButton("swfname:=btnSearch")
+	
+	Set objSettingWindow = nothing	
+End Function
+
+
+
+'This function is used to verify the cell data in Modified In column
+'@code
+'    BIZ_SystemAuditTrail_VerifyModifiedInColumnBasedOnLoanNumber()
+'@endcode
+'@param strLoanNumber - The loan number to search
+'@param strMidifiedInText - The verify cell data text
+
+Function BIZ_SystemAuditTrail_VerifyModifiedInColumnBasedOnLoanNumber(strLoanNumber, strMidifiedInText)
+
+	FRM_Logger_ReportInfoEvent "System Administrator;System Audit Trail", "Search system audit trail", null
+    
+    Dim objSearchResult, intRowNum
+    Set objSearchResult = SwfWindow("swfname:=MainForm").SwfWindow("swfname:=SetUpContainer").SwfObject("swfname:=gvRecords")
+    Wait 10
+    intRowNum = GUI_List_GetRowIndex(objSearchResult, "Loan Number", strLoanNumber)
+    GUI_List_ValidateCellData objSearchResult, intRowNum, "Modified In", strMidifiedInText 
+	
+	Set objSearchResult = nothing	
+End Function
+
+
+
+'This function is used to get search system audit trail number
+'@code
+'    BIZ_SystemAuditTrail_GetSearchResultNumber(strCategory, strAction, strBoLastName)
+'@endcode
+'@param strCategory - The search category
+'@param strAction - The search trail action
+'@param strCoLastName - The search trail last name
+
+Function BIZ_SystemAuditTrail_GetSearchResultNumber(strCategory, strAction, strBoLastName)
+
+	FRM_Logger_ReportInfoEvent "System Administrator;System Audit Trail", "Get search result number based on criteria", null
+	
+	BIZ_SystemAuditTrail_Search strCategory, strAction, strBoLastName
+	Wait 10
+	Dim strResultNum
+	strResultNum = GUI_Object_GetPropertyValue(SwfWindow("swfname:=MainForm").SwfWindow("swfname:=SetUpContainer").SwfObject("swfname:=gcAuditTrails"), "Text")
+	intBracketPosition1 = Instr(1,strResultNum,"(")
+
+	intBracketPosition2 = Instr(1,strResultNum,")")
+
+	strResultNum = Mid(strResultNum,intBracketPosition1+1,intBracketPosition2-intBracketPosition1-1)
+
+	BIZ_SystemAuditTrail_GetSearchResultNumber = Int(strResultNum)
+	
+End Function
+
+
+
+'This function is used to verify Action by search in System Audit Trail
+'@code
+'    BIZ_SystemAuditTrail_VerifyBySearch(strPersona,strAction,StrSearchColumn)
+'@endcode
+'@param strPersona  - The name of a Persona
+'@param strAction   - Action to be Performed
+'@param StrSearchColumn   - Column name
+
+Function BIZ_SystemAuditTrail_VerifyBySearch(strPersonaName, strAction, StrSearchColumn)
+
+	FRM_Logger_ReportInfoEvent "System Administrator;System Audit Trail", "Verify '"&strAction&"' Action in System Audit Trail", null
+    
+    Dim objSearchResult,boolExist
+    Set objSearchResult = SwfWindow("swfname:=MainForm").SwfWindow("swfname:=SetUpContainer").SwfObject("swfname:=gvRecords")
+    
+    Wait g_LongWaitLarge	' Due To Sync Issue We Are Calling Explicit Wait Statement
+	boolExist = GUI_List_ClickRow (objSearchResult, Null, StrSearchColumn,strPersonaName, True, False, False, "Single")
+    FRM_VerifyTrue boolExist,"Verify '"&strAction&"' Action in System Audit Trail","'"&strPersonaName&"' should be displayed in the Record"
+
+	Set objSearchResult = Nothing	
+	
+End Function
+
+'@}
+

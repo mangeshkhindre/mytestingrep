@@ -1,0 +1,151 @@
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'@defgroup BIZ_Forms_HomeCounselingProviders BIZ_Forms_HomeCounselingProviders
+'
+' List of functions here
+'@code
+'	Function BIZ_HomeCounselingProviders_AddNewProviders(strRowID)
+'   Function BIZ_Common_HomeCounselingProviders_AddNewProviders(objParentObject, strRowID)
+'	Function BIZ_Verify_HomeCounselingProviders_ProvidersDetail(strRowID)
+'@endcode
+'@{
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+'This function is for Adding a new provider
+'@code
+'    BIZ_HomeCounselingProviders_AddNewProviders(strRowID)
+'@endcode
+
+Function BIZ_HomeCounselingProviders_AddNewProviders(strRowID)
+	
+	FRM_Logger_ReportInfoEvent "Home Counseling Providers", "Set Home Counseling Providers data using Row Id '"&strRowID&"'", null
+    
+    Set objPage = SwfWindow("swfname:=MainForm").Page("title:=.*","index:=0")
+	BIZ_Common_HomeCounselingProviders_AddNewProviders objPage, strRowID	 
+	
+	Set objPage = Nothing	
+      
+End Function	
+
+
+
+'This function is for set information on Home Counseling Providers form
+'@code
+'    BIZ_Common_HomeCounselingProviders_AddNewProviders(objParentObject, strRowID)
+'@endcode
+'@param objParentObject the Parent Object
+'@param strRowID The numeric or string unique ID that used to find the line in the data spreadsheet
+
+Function BIZ_Common_HomeCounselingProviders_AddNewProviders(objParentObject, strRowID)
+    
+    Set objData = FRM_DS_GetTestData("Forms_HomeCounselingProviders", "HomeCounselingProviders", strRowID)
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AgencyName")) Then	
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=TextBox1","index:=0"), FRM_DS_GetValue(objData, "AgencyName") 	'AgencyName
+	End If	
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AgencyAdress")) Then	
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=TextBox2","index:=0"), FRM_DS_GetValue(objData, "AgencyAdress") 	'AgencyAdress
+	End If	
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "Zip")) Then	
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=l_X6","index:=0"), FRM_DS_GetValue(objData, "Zip") 	'Zip
+	End If 
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AgencyDirectPhone") ) Then	
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=TextBox6","index:=0"), FRM_DS_GetValue(objData, "AgencyDirectPhone") 	'AgencyDirectPhone
+	End If    
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AgencyPhoneTollFree") ) Then	
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=TextBox7","index:=0"), FRM_DS_GetValue(objData, "AgencyPhoneTollFree") 	'AgencyPhoneTollFree
+	End If 
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AgencyFax") ) Then	
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=TextBox8","index:=0"), FRM_DS_GetValue(objData, "AgencyFax") 	'AgencyFax
+	End If 
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "Distance")) Then	
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=TextBox5","index:=0"), FRM_DS_GetValue(objData, "Distance") 	'Distance
+	End If
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "HomeCounselingRequired")) Then		
+		GUI_WebCheckBox_Set objParentObject.WebCheckBox("html id:=__cid_CheckBox2_Ctrl","index:=0"), Cint(FRM_DS_GetValue(objData, "HomeCounselingRequired")) ' HomeCounselingRequired
+	End If	
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "HomeCounselingRequired")) Then		
+		GUI_WebCheckBox_Set objParentObject.WebCheckBox("html id:=__cid_CheckBox3_Ctrl","index:=0"), Cint(FRM_DS_GetValue(objData, "HomeCounselingRequired")) ' HomeCounselingRequired
+	End If	
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "HomeCounselingCompletionDate")) then 
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=TextBox14","index:=0"), trim(FRM_DS_GetValue(objData, "HomeCounselingCompletionDate"))   'HomeCounselingCompletionDate
+	End if	  
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "HomeCounselingDisclosureDate")) Then	
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=TextBox15","index:=0"), FRM_DS_GetValue(objData, "HomeCounselingDisclosureDate")	'HomeCounselingDisclosureDate
+	End If	
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "LanguagesSupported")) Then	
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=MultilineTextBox1","index:=0"), FRM_DS_GetValue(objData, "LanguagesSupported") 	'LanguagesSupported
+	End If	  
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "CounselingServicesProvided")) Then	
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=MultilineTextBox2","index:=0"), FRM_DS_GetValue(objData, "CounselingServicesProvided") 	'CounselingServicesProvided
+	End If	
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AgencyAffiliationDescription")) Then	
+		GUI_WebEdit_Set objParentObject.WebEdit("html id:=TextBox13","index:=0"), FRM_DS_GetValue(objData, "AgencyAffiliationDescription")	'AgencyAffiliationDescription
+	End If	
+	
+	Set objData = Nothing		
+    
+End Function
+
+
+
+'This function is for verify information on Home Counseling Providers form
+'@code
+'    BIZ_Verify_HomeCounselingProviders_ProvidersDetail(strRowID)
+'@endcode
+'@param objParentObject the Parent Object
+'@param strRowID The numeric or string unique ID that used to find the line in the data spreadsheet
+
+Function BIZ_Verify_HomeCounselingProviders_ProvidersDetail(strRowID)
+    
+    FRM_Logger_ReportInfoEvent "Home Counseling Providers", "Verify Settlement Service Provider data using Row Id '"&strRowID&"'", null
+    
+    Set objPage = SwfWindow("swfname:=MainForm").Page("title:=.*","index:=0")
+    Set objData = FRM_DS_GetTestData("Forms_HomeCounselingProviders", "HomeCounselingProviders", strRowID)
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AgencyName")) Then	
+		GUI_Object_ValidateValue objPage.WebEdit("html id:=TextBox1","index:=0"), FRM_DS_GetValue(objData, "AgencyName"), "AgencyName"
+	End If	
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AgencyAdress")) Then	
+		GUI_Object_ValidateValue objPage.WebEdit("html id:=TextBox2","index:=0"), FRM_DS_GetValue(objData, "AgencyAdress"), "AgencyAdress"
+	End If	
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "Zip")) Then	
+		GUI_Object_ValidateValue objPage.WebEdit("html id:=l_X6","index:=0"), FRM_DS_GetValue(objData, "Zip"), "Zip"
+	End If 
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AgencyDirectPhone") ) Then	
+		GUI_Object_ValidateValue objPage.WebEdit("html id:=TextBox6","index:=0"), FRM_DS_GetValue(objData, "AgencyDirectPhone"), "AgencyDirectPhone"
+	End If    
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AgencyPhoneTollFree") ) Then	
+		GUI_Object_ValidateValue objPage.WebEdit("html id:=TextBox7","index:=0"), FRM_DS_GetValue(objData, "AgencyPhoneTollFree"), "AgencyPhoneTollFree"
+	End If 
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AgencyFax") ) Then	
+		GUI_Object_ValidateValue objPage.WebEdit("html id:=TextBox8","index:=0"), FRM_DS_GetValue(objData, "AgencyFax"), "AgencyFax"
+	End If 
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "Distance")) Then	
+		GUI_Object_ValidateValue objPage.WebEdit("html id:=TextBox5","index:=0"), FormatNumber(FRM_DS_GetValue(objData, "Distance"), 2), "Distance"
+	End If
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "HomeCounselingRequired")) Then		
+		GUI_Object_ValidateProperty objPage.WebCheckBox("html id:=__cid_CheckBox2_Ctrl","index:=0"), "checked", FRM_DS_GetValue(objData, "HomeCounselingRequired"), "HomeCounselingRequired"
+	End If	
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "HomeCounselingRequired")) Then		
+		GUI_Object_ValidateProperty objPage.WebCheckBox("html id:=__cid_CheckBox3_Ctrl","index:=0"), "checked", FRM_DS_GetValue(objData, "HomeCounselingRequired"), "HomeCounselingRequired"
+	End If	
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "HomeCounselingCompletionDate")) then 
+		GUI_Object_ValidateValue objPage.WebEdit("html id:=TextBox14","index:=0"), trim(FRM_DS_GetValue(objData, "HomeCounselingCompletionDate")), "HomeCounselingCompletionDate"
+	End if	  
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "HomeCounselingDisclosureDate")) Then	
+		GUI_Object_ValidateValue objPage.WebEdit("html id:=TextBox15","index:=0"), FRM_DS_GetValue(objData, "HomeCounselingDisclosureDate"), "HomeCounselingDisclosureDate"
+	End If	
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "LanguagesSupported")) Then	
+		GUI_Object_ValidateValue objPage.WebEdit("html id:=MultilineTextBox1","index:=0"), FRM_DS_GetValue(objData, "LanguagesSupported"), "LanguagesSupported"
+	End If	  
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "CounselingServicesProvided")) Then	
+		GUI_Object_ValidateValue objPage.WebEdit("html id:=MultilineTextBox2","index:=0"), FRM_DS_GetValue(objData, "CounselingServicesProvided"), "CounselingServicesProvided"
+	End If	
+    If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "AgencyAffiliationDescription")) Then	
+		GUI_Object_ValidateValue objPage.WebEdit("html id:=TextBox13","index:=0"), FRM_DS_GetValue(objData, "AgencyAffiliationDescription"), "AgencyAffiliationDescription"
+	End If	
+	
+	Set objData = Nothing
+    Set objPage = Nothing
+
+End Function
+
+'@}

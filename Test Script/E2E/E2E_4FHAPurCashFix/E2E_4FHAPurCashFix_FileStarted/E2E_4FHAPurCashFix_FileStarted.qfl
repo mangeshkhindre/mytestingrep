@@ -1,0 +1,57 @@
+'@defgroup:E2E_4FHAPURCASHFIX_Filestarted
+'List of functions here
+'@code
+'	Function SelectLoanByColumnValueAndLoanNumber(strColTitle,strColValue)
+'@endcode
+'@{
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'This function is used to select/highlight (single click) loan with column field value
+'@code
+'@    SelectLoanByColumnValueAndLoanNumber(strColTitle,strColValue)
+'@endcode
+'@param strColTitle - column name
+'@param strColValue - column field value
+
+Function SelectLoanByColumnValueAndLoanNumber(strColTitle,strColValue)
+
+	Dim objLoanList, objColumns, intRowCount
+	Set objLoanList = SwfWindow("swfname:=MainForm").SwfObject("swfname:=gvLoans")
+	BIZ_Nav_OpenMenuItem "Pipeline;Customize Columns..."
+	set objColumns  = SwfWindow("swfname:=MainForm").SwfWindow("swfname:=TableLayoutColumnSelector").SwfObject("swfname:=gvColumns")
+	intRowCount     = objColumns.Object.Items.Count
+	
+	For i = 0 To (intRowCount - 1)		
+		
+		If objColumns.Object.Items.Item(i).Text = "Loan Number" Then
+		   objColumns.Object.Items.Item(i).Checked = True
+		ElseIf objColumns.Object.Items.Item(i).Text = "Current Loan Team Member" Then
+		   objColumns.Object.Items.Item(i).Checked = True 	
+			Exit For 
+		ElseIf objColumns.Object.Items.Item(i).Checked AND objColumns.Object.Items.Item(i).Text = strColTitle Then
+			objColumns.Object.Items.Item(i).Checked = True 
+		ElseIf objColumns.Object.Items.Item(i).Checked Then
+			objColumns.Object.Items.Item(i).Checked = False
+		End If
+	Next
+	
+	GUI_SwfButton_Click SwfWindow("swfname:=MainForm").SwfWindow("swfname:=TableLayoutColumnSelector").SwfButton("swfname:=btnOK")
+	SwfWindow("swfname:=MainForm").SwfEdit("swfname:=txtBox","index:=1").Set ""&strColValue&""
+	UTIL_Win_SendKey "{ENTER}"
+	SwfWindow("swfname:=MainForm").SwfEdit("swfname:=txtBox","index:=1").Type micReturn
+	SwfWindow("swfname:=MainForm").SwfEdit("swfname:=txtBox","index:=2").Set "David Anema James"
+	UTIL_Win_SendKey "{ENTER}"
+	SwfWindow("swfname:=MainForm").SwfEdit("swfname:=txtBox","index:=2").Type micReturn
+	objLoanList.Click 92,5
+	If(Len(GUI_List_GetCellData(SwfWindow("swfname:=MainForm").SwfObject("swfname:=gvLoans"), 0, 0)) > 0) Then 
+		objLoanList.Click 92,5
+	End If
+	Wait g_TinyWaitSmall
+	
+	Set objLoanList = Nothing
+	set objColumns  = Nothing
+	
+End Function
+
+
+
+'@}

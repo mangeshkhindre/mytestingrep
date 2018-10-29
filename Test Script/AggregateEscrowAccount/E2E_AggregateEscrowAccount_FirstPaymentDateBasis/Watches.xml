@@ -1,0 +1,6 @@
+﻿<Properties>
+  <WatchEntry0 value="GUI_Object_GetPropertyValue(objPage.WebEdit(&quot;html id:=TextBox108&quot;), &quot;value&quot;)" />
+  <WatchEntry1 value="FRM_DS_GetValue(objData, &quot;FirstPaymentDate&quot;)" />
+  <WatchEntry2 value="CStr(DateAdd(&quot;yyyy&quot;,1,FRM_DS_GetValue(objData, &quot;FirstPaymentDate&quot;)))" />
+  <WatchEntry3 value="strAmortDate" />
+</Properties>

@@ -1,0 +1,5 @@
+﻿<Properties>
+  <WatchEntry0 value="FRM_DS_GetValue(objData, &quot;FL0110_AccountNumber&quot;)" />
+  <WatchEntry1 value="FRM_DS_GetValue(objData, &quot;FL0111_Payment&quot;)" />
+  <WatchEntry2 value="FRM_DS_GetValue(objData, &quot;805_CreditReport&quot;)" />
+</Properties>

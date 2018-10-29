@@ -1,0 +1,88 @@
+# Copyright (c) 1993-2006 Microsoft Corp.
+#
+# This is a sample HOSTS file used by Microsoft TCP/IP for Windows.
+#
+# This file contains the mappings of IP addresses to host names. Each
+# entry should be kept on an individual line. The IP address should
+# be placed in the first column followed by the corresponding host name.
+# The IP address and the host name should be separated by at least one
+# space.
+#
+# Additionally, comments (such as these) may be inserted on individual
+# lines or following the machine name denoted by a '#' symbol.
+#
+# For example:
+#
+#      102.54.94.97     rhino.acme.com          # source server
+#       38.25.63.10     x.acme.com              # x client host
+
+127.0.0.1       localhost
+::1             localhost
+
+# Perforce redirection
+10.10.10.33	cp1rcs01
+
+############################################################################################
+# New Sacramento QA1 environment NAT
+############################################################################################
+199.189.127.225	archive.elliemae.com			qa.archive.elliemae.com
+199.189.127.193	dataservices.elliemaeservices.com	qa.dataservices.elliemaeservices.com
+199.189.127.228	encompass.elliemae.com			qa.encompass.elliemae.com
+199.189.127.226	lendercenter.elliemae.com		qa.lendercenter.elliemae.com
+199.189.127.227	loancenter.elliemae.com			qa.loancenter.elliemae.com
+199.189.127.228	modules.elliemaeservices.com		qa.modules.elliemaeservices.com
+199.189.127.232	networkplus.elliemae.com		qa.networkplus.elliemae.com
+199.189.127.201	www.encompasswebcenter.com		qa.www.encompasswebcenter.com
+199.189.127.201	www2.encompasswebcenter.com		qa.www2.encompasswebcenter.com
+199.189.127.224	www.mortgage-application.net		qa.www.mortgage-application.net
+199.189.127.224	1234567890.mortgage-application.net	qa.1234567890.mortgage-application.net
+199.189.127.224	encompass.mortgage-application.net	qa.encompass.mortgage-application.net
+199.189.127.213	www.mymortgageapplication.net		qa.www.mymortgageapplication.net
+199.189.127.213	6375945675.mymortgageapplication.net	qa.6375945675.mymortgageapplication.net
+199.189.127.179 www.secure-onlineorigination.com	qa.www.secure-onlineorigination.com
+199.189.127.179 9337283241.secure-onlineorigination.com	qa.9337283241.secure-onlineorigination.com
+#199.189.127.178	resourcecenter.elliemae.com		qa.resourcecenter.elliemae.com
+199.189.127.205	appraisalcenter.elliemae.com
+199.189.127.204	titlecenter.elliemae.com
+199.189.127.190	core.elliemaeservices.com
+199.189.127.190	download.elliemaeservices.com
+199.189.127.190	www.epassbusinesscenter.com
+199.189.127.190	epass.genesis2000.com
+199.189.127.71	epass.elliemaeservices.com
+199.189.127.72	leadcenter.elliemaeservices.com
+199.189.127.191	www.clickloan.com
+199.189.127.242	hosted.elliemae.com		
+199.189.127.51	www.elliemae.com
+
+
+############################################################################################
+# Sacramento QA VIPs and Internal IPs
+############################################################################################
+10.111.100.65	download.elliemae.com
+10.113.97.209	encompass360.elliemae.com
+10.113.97.180   misservices.elliemae.com     #10.111.108.41	misservices.elliemae.com
+10.113.97.125	epps.elliemae.com
+
+10.113.97.242	edm.elliemaeservices.com		qa.edm.elliemaeservices.com
+10.113.97.222	idr.production.elmae			qa.idr.production.elmae
+10.112.100.111	idp.production.elmae			qa.idp.production.elmae
+
+10.113.97.238	service.elliemae.com			qa.service.elliemae.com
+10.113.97.55	signservice.dco.elmae			qa.signservice.dco.elmae
+10.113.97.56	signservice4.dco.elmae			qa.signservice4.dco.elmae
+10.113.97.237	smartserver.elliemae.com		qa.smartserver.elliemae.com
+10.113.97.230	smartserver4.elliemae.com		qa.smartserver4.elliemae.com
+10.113.97.239	smartserver6.elliemae.com		qa.smartserver6.elliemae.com
+
+10.113.97.189  resourcecenter.elliemae.com
+
+
+############################################################################################
+# Docs Engine
+############################################################################################
+10.112.127.12	docsengine.elliemae.com	#QA1
+
+############################################################################################
+# Admin site
+############################################################################################
+54.230.86.238	www.admin.elliemae.com			int.northstar.ellielabs.com

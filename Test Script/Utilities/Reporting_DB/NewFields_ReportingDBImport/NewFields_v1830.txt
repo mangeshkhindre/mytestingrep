@@ -1,0 +1,145 @@
+FieldID,BorrowerPair,InstanceIndex,FieldSize,IncludeInAuditTrail,UseIndexForThisField,Description
+4461	,1,,,False,False,	Fee Level Disclosures Indicator
+DISCLOSURE.X1195	,1,,,False,False,	State Disc - Other Fee 1 Name
+FR0109	,1,,,False,False,	Borr Present County
+DISCLOSURE.X1199	,1,,,False,False,	State Disc - Other Fee 1 Refundable
+DISCLOSURE.X1180	,1,,,False,False,	Connecticut State Specific Disclosure - Other Fee 3 Amount
+NEWHUD2.X4717	,1,,,False,False,	Fee Details - Line PC3 - Seller Amount Paid
+NEWHUD2.X4716	,1,,,False,False,	Fee Details - Line PC3 - Borrower Amount Paid
+NEWHUD2.X4715	,1,,,False,False,	Fees Line PC3 Paid to
+NEWHUD2.X4713	,1,,,False,False,	Fee Details - Line PC3 - Closing Disclosure Amount
+NEWHUD2.X4712	,1,,,False,False,	Fee Details - Line PC3 - Loan Estimate Amount
+NEWHUD2.X4710	,1,,,False,False,	Fee Details - Line PC3 - Total Fee Amount
+NEWHUD2.X4719	,1,,,False,False,	Fee Details - Line PC3 - Lender Amount Paid
+NEWHUD2.X4718	,1,,,False,False,	Fee Details - Line PC3 - Broker Amount Paid
+NEWHUD2.X4727	,1,,,False,False,	Fee Details - Line PC3 - Seller Obligated
+NEWHUD2.X4726	,1,,,False,False,	Fee Details - Line PC3 - Seller Credit
+NEWHUD2.X4723	,1,,,False,False,	Fee Details - Line PC3 - Fees Collected Post Consmmation
+NEWHUD2.X4721	,1,,,False,False,	Fee Details - Line PC3 - Total Paid By Amount
+NEWHUD2.X4720	,1,,,False,False,	Fee Details - Line PC3 - Other Amount Paid
+NEWHUD2.X4765	,1,,,False,False,	Fee Details - Line PC2 - Sec 32 Points and Fees
+NEWHUD2.X4764	,1,,,False,False,	Fee Details - Line PC1 - Sec 32 Points and Fees
+NEWHUD2.X4763	,1,,,False,False,	Line PC Total Paid Amount
+NEWHUD2.X4762	,1,,,False,False,	Line PC Total Other Paid Amount
+NEWHUD2.X4761	,1,,,False,False,	Line PC Total Seller Amount
+NEWHUD2.X4760	,1,,,False,False,	Line PC Total Borrower Paid Amount
+UNFL0008	,1,,,False,False,	PrincipalCureAddendum Amount
+DISCLOSURE.X1183	,1,,,False,False,	State Disc - Other Fee 3 Description
+NEWHUD2.X4725	,1,,,False,False,	Fee Details - Line PC3 - Borrower Did Shop For
+NEWHUD2.X4728	,1,,,False,False,	Fee Details - Line PC3 - Seller Obligated Amount
+DISCLOSURE.X1185	,1,,,False,False,	State Disc - Other Fee 2 Explanation
+DISCLOSURE.X1189	,1,,,False,False,	State Disc - Credit Report Fee Amount
+POPT2.X19	,1,,,False,False,	Section PC Line PC2 POC and PTC and PTC Indicator
+NEWHUD2.X4729	,1,,,False,False,	Fees Line PC4 Descr
+UNFL0006	,1,,,False,False,	POC Indicator
+NEWHUD2.X4755	,1,,,False,False,	Fees Line PC4 Paid By
+DISCLOSURE.X1175	,1,,,False,False,	Connecticut State Specific Disclosure - Application Fee Amount
+NEWHUD2.X4753	,1,,,False,False,	Fees Line PC2 Paid By
+NEWHUD2.X4724	,1,,,False,False,	Fee Details - Line PC3 - Borrower Can Shop For
+DISCLOSURE.X1179	,1,,,False,False,	Connecticut State Specific Disclosure - Other Fee 2 Amount
+DISCLOSURE.X1201	,1,,,False,False,	State Disc - Other Fee 3 Refundable
+NEWHUD2.X4687	,1,,,False,False,	Fee Details - Line PC2 - Total Fee Amount
+NEWHUD2.X4686	,1,,,False,False,	Fees Line PC2 Seller
+NEWHUD2.X4685	,1,,,False,False,	Fees Line PC2 Borr Paid Amount
+NEWHUD2.X4684	,1,,,False,False,	Fees Line PC2 Paid To Name
+NEWHUD2.X4681	,1,,,False,False,	Fee Details - Line PC1 - Seller Obligated
+NEWHUD2.X4689	,1,,,False,False,	Fee Details - Line PC2 - Loan Estimate Amount
+NEWHUD2.X4688	,1,,,False,False,	Fee Details - Line PC2 - Total Fee Percentage
+DISCLOSURE.X1191	,1,,,False,False,	State Disc - Other Fee 1 Amount
+TR0099	,1,,,False,False,	Vesting Party - Non-Borrowing Owner Record ID
+NEWHUD2.X4669	,1,,,False,False,	Fees Line PC1 Paid to
+NEWHUD2.X4711	,1,,,False,False,	Fee Details - Line PC3 - Total Fee Percentage
+NEWHUD2.X4733	,1,,,False,False,	Fee Details - Line PC4 - Total Fee Amount
+NEWHUD2.X4732	,1,,,False,False,	Fees Line PC4 Seller
+NEWHUD2.X4739	,1,,,False,False,	Fee Details - Line PC4 - Borrower Amount Paid
+NEWHUD2.X4738	,1,,,False,False,	Fees Line PC4 Paid to
+NEWHUD2.X4747	,1,,,False,False,	Fee Details - Line PC4 - Borrower Can Shop For
+NEWHUD2.X4743	,1,,,False,False,	Fee Details - Line PC4 - Other Amount Paid
+NEWHUD2.X4742	,1,,,False,False,	Fee Details - Line PC4 - Lender Amount Paid
+NEWHUD2.X4749	,1,,,False,False,	Fee Details - Line PC4 - Seller Credit
+NEWHUD2.X4748	,1,,,False,False,	Fee Details - Line PC4 - Borrower Did Shop For
+NEWHUD2.X4705	,1,,,False,False,	Fee Details - Line PC2 - Seller Obligated Amount
+NEWHUD2.X4662	,1,,,False,False,	Fees Line PC1 Borr Paid Amount
+NEWHUD2.X4660	,1,,,False,False,	Fees Line PC1 Descr
+NEWHUD2.X4701	,1,,,False,False,	Fee Details - Line PC2 - Borrower Can Shop For
+CD2.X2	,1,,,False,False,	Disclose Lender Credits applied
+DISCLOSURE.X1181	,1,,,False,False,	State Disc - Other Fee 1 Description
+DISCLOSURE.X1196	,1,,,False,False,	State Disc - Other Fee 2 Name
+UNFL0007	,1,,,False,False,	Paid By
+DISCLOSURE.X1204	,1,,,False,False,	State Disc - Additional Payments Disclosure HELOC
+DISCLOSURE.X1186	,1,,,False,False,	State Disc - Other Fee 3 Explanation
+NEWHUD2.X4736	,1,,,False,False,	Fee Details - Line PC4 - Closing Disclosure Amount
+NEWHUD2.X4735	,1,,,False,False,	Fee Details - Line PC4 - Loan Estimate Amount
+DISCLOSURE.X1176	,1,,,False,False,	Connecticut State Specific Disclosure - Credit Report Fee Amount
+NEWHUD2.X4731	,1,,,False,False,	Fees Line PC4 Borr Paid Amount
+NEWHUD2.X4680	,1,,,False,False,	Fee Details - Line PC1 - Seller Credit
+DISCLOSURE.X1202	,1,,,False,False,	State Disc - Other Fee 4 Refundable
+NEWHUD2.X4697	,1,,,False,False,	Fee Details - Line PC2 - Other Amount Paid
+NEWHUD2.X4696	,1,,,False,False,	Fee Details - Line PC2 - Lender Amount Paid
+NEWHUD2.X4695	,1,,,False,False,	Fee Details - Line PC2 - Broker Amount Paid
+NEWHUD2.X4694	,1,,,False,False,	Fee Details - Line PC2 - Seller Amount Paid
+NEWHUD2.X4667	,1,,,False,False,	Fee Details - Line PC1 - Closing Disclosure Amount
+NEWHUD2.X4666	,1,,,False,False,	Fee Details - Line PC1 - Loan Estimate Amount
+NEWHUD2.X4665	,1,,,False,False,	Fee Details - Line PC1 - Total Fee Percentage
+NEWHUD2.X4664	,1,,,False,False,	Fee Details - Line PC1 - Total Fee Amount
+NEWHUD2.X4663	,1,,,False,False,	Fees Line PC1 Seller
+NEWHUD2.X4661	,1,,,False,False,	Fees Line PC1 Paid To Name
+DISCLOSURE.X1192	,1,,,False,False,	State Disc - Other Fee 2 Amount
+POPT2.X20	,1,,,False,False,	Section PC Line PC3 POC and PTC and PTC Indicator
+DISCLOSURE.X1197	,1,,,False,False,	State Disc - Other Fee 3 Name
+DISCLOSURE.X1194	,1,,,False,False,	State Disc - Other Fee 4 Amount
+POPT2.X21	,1,,,False,False,	Section PC Line PC4 POC and PTC and PTC Indicator
+DISCLOSURE.X1198	,1,,,False,False,	State Disc - Other Fee 4 Name
+NEWHUD2.X4767	,1,,,False,False,	Fee Details - Line PC4 - Sec 32 Points and Fees
+NEWHUD2.X4766	,1,,,False,False,	Fee Details - Line PC3 - Sec 32 Points and Fees
+NEWHUD2.X4768	,1,,,False,False,	Section PC Subsequently Paid Finance Charge
+NEWHUD2.X4674	,1,,,False,False,	Fee Details - Line PC1 - Other Amount Paid
+POPT2.X18	,1,,,False,False,	Section PC Line PC1 POC and PTC and PTC Indicator
+NEWHUD2.X4734	,1,,,False,False,	Fee Details - Line PC4 - Total Fee Percentage
+NEWHUD2.X4707	,1,,,False,False,	Fees Line PC3 Paid To Name
+NEWHUD2.X4706	,1,,,False,False,	Fees Line PC3 Descr
+NEWHUD2.X4704	,1,,,False,False,	Fee Details - Line PC2 - Seller Obligated
+NEWHUD2.X4703	,1,,,False,False,	Fee Details - Line PC2 - Seller Credit
+NEWHUD2.X4702	,1,,,False,False,	Fee Details - Line PC2 - Borrower Did Shop For
+NEWHUD2.X4700	,1,,,False,False,	Fee Details - Line PC2 - Fees Collected Post Consmmation
+NEWHUD2.X4709	,1,,,False,False,	Fees Line PC3 Seller
+NEWHUD2.X4708	,1,,,False,False,	Fees Line PC3 Borr Paid Amount
+NEWHUD2.X4690	,1,,,False,False,	Fee Details - Line PC2 - Closing Disclosure Amount
+NEWHUD2.X4752	,1,,,False,False,	Fees Line PC1 Paid By
+NEWHUD2.X4751	,1,,,False,False,	Fee Details - Line PC4 - Seller Obligated Amount
+NEWHUD2.X4750	,1,,,False,False,	Fee Details - Line PC4 - Seller Obligated
+CD4.X51	,1,,,False,False,	Escrowed Property Costs Basis
+DISCLOSURE.X1184	,1,,,False,False,	State Disc - Other Fee 1 Explanation
+NEWHUD2.X4754	,1,,,False,False,	Fees Line PC3 Paid By
+NEWHUD2.X4730	,1,,,False,False,	Fees Line PC4 Paid To Name
+DISCLOSURE.X1188	,1,,,False,False,	State Disc - Appraisal Fee Amount
+NEWHUD2.X4683	,1,,,False,False,	Fees Line PC2 Descr
+NEWHUD2.X4746	,1,,,False,False,	Fee Details - Line PC4 - Fees Collected Post Consmmation
+NEWHUD2.X4682	,1,,,False,False,	Fee Details - Line PC1 - Seller Obligated Amount
+NEWHUD2.X4744	,1,,,False,False,	Fee Details - Line PC4 - Total Paid By Amount
+DISCLOSURE.X1182	,1,,,False,False,	State Disc - Other Fee 2 Description
+NEWHUD2.X4741	,1,,,False,False,	Fee Details - Line PC4 - Broker Amount Paid
+FV.X397	,1,,,False,False,	Cure Applied to Principal Reduction (POC)
+NEWHUD2.X4740	,1,,,False,False,	Fee Details - Line PC4 - Seller Amount Paid
+COMPLIANCEVERSION.X1	,1,,,False,False,	Encompass Version When Disclosure Tracking Log is Added to Loan
+DISCLOSURE.X1187	,1,,,False,False,	State Disc - Application Fee Amount
+DISCLOSURE.X1190	,1,,,False,False,	State Disc - Origination Fee Amount
+NEWHUD2.X4671	,1,,,False,False,	Fee Details - Line PC1 - Seller Amount Paid
+NEWHUD2.X4675	,1,,,False,False,	Fee Details - Line PC1 - Total Paid By Amount
+DISCLOSURE.X1203	,1,,,False,False,	State Disc - Additional Payments Disclosure Other
+4462	,1,,,False,False,	Good Faith Change of Circumstance - Apply to LEorCD
+UNFL0009	,1,,,False,False,	Paid To
+NEWHUD2.X4672	,1,,,False,False,	Fee Details - Line PC1 - Broker Amount Paid
+NEWHUD2.X4693	,1,,,False,False,	Fee Details - Line PC2 - Borrower Amount Paid
+NEWHUD2.X4670	,1,,,False,False,	Fee Details - Line PC1 - Borrower Amount Paid
+NEWHUD2.X4692	,1,,,False,False,	Fees Line PC2 Paid to
+FV.X396	,1,,,False,False,	Cure Applied to Lender Credit
+DISCLOSURE.X1177	,1,,,False,False,	Connecticut State Specific Disclosure - Appraisal Fee Amount
+NEWHUD2.X4678	,1,,,False,False,	Fee Details - Line PC1 - Borrower Can Shop For
+NEWHUD2.X4698	,1,,,False,False,	Fee Details - Line PC2 - Total Paid By Amount
+NEWHUD2.X4677	,1,,,False,False,	Fee Details - Line PC1 - Fees Collected Post Consmmation
+NEWHUD2.X4673	,1,,,False,False,	Fee Details - Line PC1 - Lender Amount Paid
+NEWHUD2.X4679	,1,,,False,False,	Fee Details - Line PC1 - Borrower Did Shop For
+DISCLOSURE.X1178	,1,,,False,False,	Connecticut State Specific Disclosure - Other Fee 1 Amount
+DISCLOSURE.X1200	,1,,,False,False,	State Disc - Other Fee 2 Refundable
+DISCLOSURE.X1193	,1,,,False,False,	State Disc - Other Fee 3 Amount

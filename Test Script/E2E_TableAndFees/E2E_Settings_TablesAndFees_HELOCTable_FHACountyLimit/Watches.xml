@@ -1,0 +1,8 @@
+﻿<Properties>
+  <WatchEntry0 value="intColNumOrText" />
+  <WatchEntry1 value="strSearchText" />
+  <WatchEntry2 value="intRowCount" />
+  <WatchEntry3 value="intRowNum" />
+  <WatchEntry4 value="strActualText" />
+  <WatchEntry5 value="strSearchText" />
+</Properties>

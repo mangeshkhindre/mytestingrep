@@ -1,0 +1,8 @@
+﻿<Properties>
+  <WatchEntry0 value="FRM_RT_GetPropValue(g_FRM_Prop_LoanNo)" />
+  <WatchEntry1 value="FRM_RT_GetPropValue g_FRM_Prop_LoanNo" />
+  <WatchEntry2 value="strSource" />
+  <WatchEntry3 value="strDetails" />
+  <WatchEntry4 value="intCount" />
+  <WatchEntry5 value="intCount" />
+</Properties>

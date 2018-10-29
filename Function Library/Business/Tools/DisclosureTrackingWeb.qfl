@@ -1,0 +1,867 @@
+''''''''''''''''''''''''''''''''''''''''''
+'@defgroup: BIZ_Tools_DisclosureTrackingWeb BIZ_Tools_DisclosureTrackingWeb
+'
+' List of functions:
+'
+' @code
+'	Function BIZ_DisclosureTrackingWeb_Login(strRowID)
+'	Function BIZ_DisclosureTrackingWeb_Logout()
+'   Function BIZ_DisclosureTrackingWeb_BorrowerReject(strLoanNumber, strRowID, intBorrowerIdx)
+'   Function BIZ_DisclosureTrackingWeb_BorrowerAccept(strLoanNumber, strRowID, intBorrowerIdx)
+'	Function BIZ_DisclosureTrackingWeb_BorrowerAcceptEConsent(strLoanNumber, strRowID, intBorrowerIdx)
+'	Function BIZ_DisclosureTrackingWeb_BorrowerRejectEConsent(strLoanNumber, strRowID, intBorrowerIdx)
+'	Function BIZ_DisclosureTrackingWeb_OpenLoanDetails(strRowID, strLoanNumber)
+'  	Function BIZ_DisclosureTrackingWeb_LoanCenter_Login(strRowID)
+'   Function BIZ_DisclosureTrackingWeb_LoanCenter_SelectPackage(strLoanNumber, strRowID)
+'  	Function BIZ_DisclosureTrackingWeb_LoanCenter_ExpandDocs(strLoanNumber, strRowID)
+'   Function BIZ_DisclosureTrackingWeb_LoanCenter_ClickeSign()
+'   Function BIZ_DisclosureTrackingWeb_LoanCenter_AcceptAndeSign(strLoanNumber, strRowID)
+'   Function BIZ_DisclosureTrackingWeb_LoanCenter_CoBorrower_ExpandDocs(strLoanNumber, strRowID)
+'	Function BIZ_DisclosureTrackingWeb_AcceptEConsent()
+'   Function BIZ_DisclosureTrackingWeb_LoanCenter_eSign(stBIZ_DisclosureTrackingWeb_LoanCenter_AcceptNSigneSignDocumentrRowID, intBorrowerIdx, flageSign)
+'	Function BIZ_DisclosureTrackingWeb_AcceptEConsentWithBorrowerType(strRowID,strBorrowerOrCoBorrower)
+'	Function BIZ_DisclosureTrackingWeb_LoanCenter_AcceptNSigneSignDocument(strLoanNumber, strRowID)
+'	Function BIZ_DisclosureTrackingWeb_LoanCenter_UploadDocuments(strLoanNumber, strRowID)
+'	Function BIZ_DisclosureTrackingWeb_SaveE2ELoanNumberAndSendeDisclosure(strSelectPackageTypeRowID, strSelectDisclosureDocRowID, strSendDisclosureRowID, strLoanCenterRowID)
+'	Function BIZ_DisclosureTrackingWeb_LoanCenter_LoginNToCenterAccepteSign(strLoanCenterLoginRowID, streDisclosureDocRowID)
+'	Function BIZ_DisclosureTrackingWeb_SaveE2ELoanNumberAndSendRequest(strLoanCenterRowID, strRequestRowID)
+'	Function BIZ_DisclosureTrackingWeb_SaveE2ELoanNumberAndSendeConsent(strLoanCenterRowID, bolBorrower, bolCoBorrower)
+' @endcode
+' @{
+''''''''''''''''''''''''''''''''''''''''''
+
+'This function is used to login to DisclosureTracking website
+'@code
+'    BIZ_DisclosureTrackingWeb_Login(strRowID)
+'@endcode 
+'param strRowID
+	
+Function BIZ_DisclosureTrackingWeb_Login(strRowID)
+	
+    GUI_Browser_CloseAll()
+    Set objData = FRM_DS_GetGlobalTestData("Website", strRowID)
+	GUI_Browser_OpenUrl objData.Item("URL"),"IE"
+    GUI_Object_WaitTillExist Browser("creationtime:=0").Page("index:=0")
+    
+    Set objWebPage = Browser("name:=.*Ellie Mae.*", "index:=0").Page("title:=.*Ellie Mae.*", "index:=0")	
+    GUI_Page_SetCurrent(objWebPage)
+    
+    If GUI_Object_IsExistX(objWebPage.Link("name:=>CHECK LOAN STATUS", "index:=0"), 5) Then
+        GUI_Link_Click objWebPage.Link("name:=>CHECK LOAN STATUS", "index:=0")
+    End If
+	
+	GUI_WebEdit_Set objWebPage.WebEdit("html id:=.*Email"), FRM_DS_GetValue(objData, "EmailAccount")
+	GUI_WebEdit_Set objWebPage.WebEdit("html id:=.*Password"), FRM_DS_GetValue(objData, "Password")
+	GUI_Link_Click objWebPage.Link("html id:=.*linkButton")
+	
+	Set objWebPage = Nothing
+	Set objData    = Nothing
+End Function
+
+
+
+'This function is used to logout to DisclosureTracking website
+'@code
+'    BIZ_DisclosureTrackingWeb_Logout()
+'@endcode 
+	
+Function BIZ_DisclosureTrackingWeb_Logout()
+	If (GUI_Object_IsExistX(Browser("name:=.*Ellie Mae.*", "index:=0").Page("title:=.*Ellie Mae.*", "index:=0"), 50)) Then 
+		Set objBrowser = Browser("name:=.*Ellie Mae.*", "index:=0")
+		Set objWebPage = objBrowser.Page("title:=.*Ellie Mae.*", "index:=0")
+	ElseIf(GUI_Object_IsExist(Browser("name:=.*Mortgage.*", "index:=0").Page("title:=.*Mortgage.*", "index:=0"))) Then 
+		Set objBrowser = Browser("name:=.*Mortgage.*", "index:=0")
+		Set objWebPage = objBrowser.Page("title:=.*Mortgage.*", "index:=0")
+	End If
+	
+	GUI_Link_Click objWebPage.Link("name:=Log Out", "index:=0")
+	wait g_TinyWaitSmall
+	objBrowser.Close
+	
+End Function 
+
+
+
+'This function is used to borrower reject eDisclosure
+'@code
+'    BIZ_DisclosureTrackingWeb_BorrowerReject
+'@endcode
+'@param strLoanNumber
+'@param strRowID 
+'@param intBorrowerIdx borrower index - 1 for Borrower, 2 for CoBorrower
+
+Function BIZ_DisclosureTrackingWeb_BorrowerReject(strLoanNumber, strRowID, intBorrowerIdx)
+
+	Set objWebPage  = Browser("name:=.*Ellie Mae.*", "index:=0").Page("title:=.*Ellie Mae.*", "index:=0")	
+    Set objData     = FRM_DS_GetTestData("eFolder_Tab", "SendeDisclosures", strRowID)
+	strBorrowerName = FRM_DS_GetValue(objData, "BorrowerName")
+	
+	If BIZ_DisclosureTrackingWeb_OpenLoanDetails(strBorrowerName, strLoanNumber) Then
+	
+		'GUI_Link_Click objWebPage.Link("name:=Electronic Loan Document Request", "index:=0")
+		If intBorrowerIdx = 1 Then
+			'GUI_Link_Click objWebPage.Link("innertext:="&strBorrowerName, "index:=0")
+			GUI_Link_Click objWebPage.Link("name:=eSign", "index:=0")
+		ElseIf intBorrowerIdx = 2 Then
+			strLink = FRM_DS_GetValue(objData, "CoBorrowerName")
+			'GUI_Link_Click objWebPage.Link("innertext:="&strLink, "index:=0")
+			GUI_Link_Click objWebPage.Link("name:=eSign", "index:=1")
+		End If    
+		GUI_Link_Click objWebPage.Link("name:=I Do Not Agree", "index:=0")
+		If objWebPage.Link("name:=Done","index:=0").Exist(120) Then
+		   GUI_Link_Click objWebPage.Link("name:=Done", "index:=0")	
+		End If
+		FRM_Logger_ReportInfoEvent "Disclosure Tracking Reject", "Borrower " & intBorrowerIdx & " " &strLink & "-I Do Not Agree", null 
+		
+	Else
+		FRM_Logger_ReportFailEvent "Disclosure Tracking Reject", "Borrower " & intBorrowerIdx & " " &strLink & "-I Do Not Agree", null 
+	End If
+	Set objWebPage = Nothing	
+	
+End Function	
+
+
+
+'This function is used to borrower accept eDisclosure
+'@code
+'    BIZ_DisclosureTrackingWeb_BorrowerAccept(strRowID, 1)
+'@endcode
+'@param strLoanNumber
+'@param strRowID 
+'@param intBorrowerIdx borrower index - 1 for Borrower, 2 for CoBorrower
+
+Function BIZ_DisclosureTrackingWeb_BorrowerAccept(strLoanNumber, strRowID, intBorrowerIdx)
+	
+	Set objWebPage  = Browser("name:=.*Ellie Mae.*", "index:=0").Page("title:=.*Ellie Mae.*", "index:=0")	
+    Set objData     = FRM_DS_GetTestData("eFolder_Tab", "SendeDisclosures", strRowID)
+    strBorrowerName = FRM_DS_GetValue(objData, "BorrowerName")
+
+	If BIZ_DisclosureTrackingWeb_OpenLoanDetails(strBorrowerName, strLoanNumber) Then
+	
+		'GUI_Link_Click objWebPage.Link("name:=Electronic Loan Document Request", "index:=0")
+		If intBorrowerIdx = 1 Then 
+			'GUI_Link_Click objWebPage.Link("innertext:="&strBorrowerName, "index:=0")
+			GUI_Link_Click objWebPage.Link("name:=eSign", "index:=0")
+		Elseif intBorrowerIdx = 2 Then
+			strLink = FRM_DS_GetValue(objData, "CoBorrowerName")
+			'GUI_Link_Click objWebPage.Link("innertext:="&strLink, "index:=0")
+			GUI_Link_Click objWebPage.Link("name:=eSign", "index:=1")
+		End If     
+		
+		If objWebPage.Link("name:=I Agree", "index:=0").Exist(1) Then
+			GUI_Link_Click objWebPage.Link("name:=I Agree", "index:=0") 
+		End If
+		
+		If intBorrowerIdx = 1 Then    
+			strAuthCode = FRM_DS_GetValue(objData, "BorrowerCode")
+		Elseif intBorrowerIdx = 2 Then
+			strAuthCode = FRM_DS_GetValue(objData, "CoBorrowerCode")
+		End If
+		If objWebPage.WebEdit("html id:=passwordTextBox").Exist(120) Then
+			GUI_WebEdit_Set objWebPage.WebEdit("html id:=passwordTextBox"), strAuthCode
+		End If	
+		GUI_Link_Click objWebPage.Link("name:=Next >", "index:=0")
+		GUI_WebButton_Click Browser("name:=DocuSign").Page("title:=DocuSign").WebButton("name:=Other Actions.*", "type:=button", "html tag:=BUTTON", "index:=0")
+		wait 2
+		GUI_WebButton_Click Browser("name:=DocuSign").Page("title:=DocuSign").WebButton("name:=Finish Later.*", "type:=button", "html tag:=BUTTON", "index:=0")
+		'GUI_Link_Click objWebPage.Link("name:=Cancel", "index:=0")
+		'GUI_WinButton_Click Dialog("text:=Message from webpage").Winbutton("text:=OK")
+	
+		FRM_Logger_ReportInfoEvent "Disclosure Tracking Accept", "Borrower " & intBorrowerIdx & " " &strLink & "-I Agree", null 
+	Else
+		FRM_Logger_ReportFailEvent "Disclosure Tracking Accept", "Borrower " & intBorrowerIdx & " " &strLink & "-I Agree", null 
+	End If
+	
+	Set objWebPage = Nothing
+	Set objData    = Nothing	
+	
+End Function
+
+
+
+'This function is used to borrower accept eConsent
+'@code
+'    BIZ_DisclosureTrackingWeb_BorrowerAcceptEConsent("1601EM003743123444", strRowID, 1)
+'@endcode
+'@param strLoanNumber 
+'@param strRowID 
+'@param intBorrowerIdx borrower index - 1 for Borrower, 2 for CoBorrower
+
+Function BIZ_DisclosureTrackingWeb_BorrowerAcceptEConsent(strLoanNumber, strRowID, intBorrowerIdx)
+	
+    
+	Set objWebPage  = Browser("name:=.*Ellie Mae.*", "index:=0").Page("title:=.*Ellie Mae.*", "index:=0")	
+	Set objData     = FRM_DS_GetTestData("eFolder_Tab", "SendeDisclosures", strRowID)
+    strBorrowerName = FRM_DS_GetValue(objData, "BorrowerName")    
+	
+	If BIZ_DisclosureTrackingWeb_OpenLoanDetails(strBorrowerName, strLoanNumber) Then
+	
+		GUI_Link_Click objWebPage.Link("name:=Electronic Signature Consent for Loan Documents", "index:=0")
+		If intBorrowerIdx = 1 Then
+			If objWebPage.Link("innertext:="&strBorrowerName, "index:=0").Exist(10) Then
+				GUI_Link_Click objWebPage.Link("innertext:="&strBorrowerName, "index:=0")
+			End If	
+		Elseif intBorrowerIdx = 2 Then
+			strLink = FRM_DS_GetValue(objData, "CoBorrowerName")
+			If objWebPage.Link("innertext:="&strLink, "index:=0").Exist(10) Then
+				GUI_Link_Click objWebPage.Link("innertext:="&strLink, "index:=0")
+			End If	
+		End If     
+		GUI_Link_Click objWebPage.Link("name:=View", "index:=0")
+		GUI_Link_Click objWebPage.Link("name:=I Agree", "index:=0")    
+        If objWebPage.Link("name:=Done","index:=0").Exist(120) Then
+			GUI_Link_Click objWebPage.Link("name:=Done","index:=0")
+		End If
+		FRM_Logger_ReportInfoEvent "Disclosure Tracking Accept E-Consent", "Borrower " & intBorrowerIdx & " " &strLink, null 
+	Else
+		FRM_Logger_ReportFailEvent "Disclosure Tracking Accept E-Consent", "Borrower " & intBorrowerIdx & " " &strLink, null 
+	End If
+	
+	Set objWebPage = Nothing
+	Set objData    = Nothing
+	
+End Function
+
+
+
+'This function is used to borrower reject eConsent
+'@code
+'    BIZ_DisclosureTrackingWeb_BorrowerRejectEConsent("1601EM003743123444", strRowID, 1)
+'@endcode
+'@param strLoanNumber 
+'@param strRowID 
+'@param intBorrowerIdx borrower index - 1 for Borrower, 2 for CoBorrower
+Function BIZ_DisclosureTrackingWeb_BorrowerRejectEConsent(strLoanNumber, strRowID, intBorrowerIdx)
+	
+    Dim objWebPage, objData
+	Set objWebPage = Browser("name:=.*Ellie Mae.*", "index:=0").Page("title:=.*Ellie Mae.*", "index:=0")	
+	Set objData    = FRM_DS_GetTestData("eFolder_Tab", "SendeDisclosures", strRowID)
+    strBorrowerName = FRM_DS_GetValue(objData, "BorrowerName")    
+	
+	If BIZ_DisclosureTrackingWeb_OpenLoanDetails(strBorrowerName, strLoanNumber) Then
+	
+		GUI_Link_Click objWebPage.Link("name:=Electronic Signature Consent for Loan Documents", "index:=0")
+		If intBorrowerIdx = 1 Then
+			GUI_Link_Click objWebPage.Link("innertext:="&strBorrowerName, "index:=0")
+		Elseif intBorrowerIdx = 2 Then
+			strLink = FRM_DS_GetValue(objData, "CoBorrowerName")
+			GUI_Link_Click objWebPage.Link("innertext:="&strLink, "index:=0")
+		End If     
+		GUI_Link_Click objWebPage.Link("name:=View", "index:=0")
+		GUI_Link_Click objWebPage.Link("name:=I Do Not Agree", "index:=0")    
+        If objWebPage.Link("name:=Done","index:=0").Exist(120) Then 
+			GUI_Link_Click objWebPage.Link("name:=Done","index:=0")
+		End If
+		FRM_Logger_ReportInfoEvent "Disclosure Tracking Reject E-Consent", "Borrower " & intBorrowerIdx & " " &strLink, Null 
+	Else
+		FRM_Logger_ReportFailEvent "Disclosure Tracking Reject E-Consent", "Borrower " & intBorrowerIdx & " " &strLink, Null 
+	End If
+	
+	Set objWebPage = Nothing
+	Set objData    = Nothing
+	
+End Function
+
+
+'Opens the loan detail page for the provided loan number.  It clicks on borrower names to open
+'loan detail, and checks for loan number.  If it doesn't match the provided loan number, goes on to 
+'the next link.   It searches at most 20 links, if not found, returns false; otherwise return true
+'@param strBorrowerName 
+'@param strLoanNumber 
+
+Function BIZ_DisclosureTrackingWeb_OpenLoanDetails(strBorrowerName, strLoanNumber)
+	
+    
+    If (GUI_Object_IsExistX(Browser("name:=.*Ellie Mae.*", "index:=0").Page("title:=.*Ellie Mae.*", "index:=0"), 60)) Then 
+		Set objWebPage = Browser("name:=.*Ellie Mae.*", "index:=0").Page("title:=.*Ellie Mae.*", "index:=0")
+		'Browser("name:=.*Ellie Mae.*", "index:=0").Refresh
+	End If
+	If (GUI_Object_IsExistX(Browser("name:=.*Mortgage.*", "index:=0").Page("title:=.*Mortgage.*", "index:=0"), 60)) Then 
+		Set objWebPage = Browser("name:=.*Mortgage.*", "index:=0").Page("title:=.*Mortgage.*", "index:=0")
+		'Browser("name:=.*Mortgage.*", "index:=0").Refresh
+	End If
+	boolFound = False	
+		
+	For i=0 To 19   'search for 20 times, if not found, fail it
+		If objWebPage.WebElement("html id:=.*pageNameLabel", "innertext:=Check Loan Status", "index:=0").Exist(15) Then
+			GUI_Link_Click objWebPage.WebElement("innertext:="&strBorrowerName, "index:="&i)
+		End If
+        GUI_Object_WaitTillExistX objWebPage.WbfGrid("html id:=ctl01_contentContainerHolder_tableLoanDetail"), 20
+		strText = objWebPage.WbfGrid("html id:=ctl01_contentContainerHolder_tableLoanDetail").GetROProperty("innertext")
+		'Loan Number:1601EM003515123444Loan Program:...
+		strActualLoanNumber = Trim(Mid(strText, InStr(strText, ":")+1, InStr(strText, "Loan Program")-InStr(strText, ":")-1))
+		
+		If UTIL_String_IsNotEmpty(strLoanNumber) Then
+			If strActualLoanNumber <> strLoanNumber Then
+				GUI_Link_Click objWebPage.Link("html id:=ctl01_contentContainerHolder_linkCheckLoanStatus", "innertext:=Check Loan Status", "index:=0")
+			Else
+				boolFound = True
+				FRM_Logger_ReportInfoEvent "Open Loan Detail", "Borrower " & strBorrowerName & ", Loan Number " &strActualLoanNumber, null 
+				Exit For
+			End If
+		Else    		
+			boolFound = True
+			FRM_Logger_ReportInfoEvent "Open Loan Detail First Link", "Borrower " & strBorrowerName & ", Loan Number " &strActualLoanNumber, null 			
+			Exit For
+		End If 						
+	Next		
+	If Not boolFound Then
+		FRM_Logger_ReportFailEvent "Open Loan Detail", "Borrower " & strBorrowerName & ", Loan Number " &strLoanNumber & " Not Found", null 
+	End If
+	BIZ_DisclosureTrackingWeb_OpenLoanDetails = boolFound
+	
+    Set objWebPage = Nothing
+    
+End Function
+
+
+
+'This function is used to click 'Electronic Loan Document Request' link and borrower link to expand the docs in Loan Details page.
+'@code
+'    BIZ_DisclosureTrackingWeb_LoanCenter_ExpandDocs(strLoanNumber, strRowID)
+'@endcode 
+'@param strLoanNumber 
+'@param strRowID The numeric or string unique ID that used to find the line in the data spreadsheet
+
+Function BIZ_DisclosureTrackingWeb_LoanCenter_ExpandDocs(strLoanNumber, strRowID)
+	
+    FRM_Logger_ReportInfoEvent "Expand Docs", "Expand docs using Row Id '"&strRowID&"' in the eFolder_Tab datasheet", null
+    
+    Dim objWebPage, objData, strBorrowerName
+    Set objWebPage  = Browser("name:=.*", "index:=0").Page("title:=.*", "index:=0")	
+    Set objData     = FRM_DS_GetTestData("eFolder_Tab", "SendeDisclosures", strRowID)
+    strBorrowerName = FRM_DS_GetValue(objData, "BorrowerName")
+    
+    If BIZ_DisclosureTrackingWeb_OpenLoanDetails(strBorrowerName, strLoanNumber) Then       
+	    If objWebPage.Link("innertext:="&strBorrowerName, "index:=0").exist(3) Then
+			GUI_Link_Click objWebPage.Link("innertext:="&strBorrowerName, "index:=0")
+		End If	
+	End If
+	
+	Set objWebPage = Nothing
+	Set objData    = Nothing
+    
+End Function
+
+
+
+'This function is used to click 'Electronic Loan Document Request' link and Co-Borrower link to expand the docs in Loan Details page.
+'@code
+'    BIZ_DisclosureTrackingWeb_LoanCenter_CoBorrower_ExpandDocs(strLoanNumber, strRowID)
+'@endcode 
+'@param strLoanNumber 
+'@param strRowID The numeric or string unique ID that used to find the line in the data spreadsheet
+
+Function BIZ_DisclosureTrackingWeb_LoanCenter_CoBorrower_ExpandDocs(strLoanNumber, strRowID)
+	
+    FRM_Logger_ReportInfoEvent "Expand Docs", "Expand docs using Row Id '"&strRowID&"' in the eFolder_Tab datasheet", null
+    Dim objWebPage, objData, strBorrowerName, strCoBorrowerName
+    Set objWebPage = Browser("name:=.*", "index:=0").Page("title:=.*", "index:=0")	
+    Set objData    = FRM_DS_GetTestData("eFolder_Tab", "SendeDisclosures", strRowID)
+    
+    strBorrowerName   = FRM_DS_GetValue(objData, "BorrowerName")
+    strCoBorrowerName = FRM_DS_GetValue(objData, "CoBorrowerName")
+    
+    If BIZ_DisclosureTrackingWeb_OpenLoanDetails(strBorrowerName, strLoanNumber) Then       
+		GUI_Link_Click objWebPage.Link("innertext:="&strCoBorrowerName, "index:=0")
+	End If
+	
+	Set objWebPage = Nothing
+	Set objData    = Nothing
+    
+End Function
+
+
+'This function is used to click on eSign button in Loan Details page.
+'@code
+'    BIZ_DisclosureTrackingWeb_LoanCenter_ClickeSign()
+'@endcode 
+	
+Function BIZ_DisclosureTrackingWeb_LoanCenter_ClickeSign()
+    
+    Dim objWebPage
+    Set objWebPage = Browser("name:=.*", "index:=0").Page("title:=.*", "index:=0")	           
+    GUI_Link_Click objWebPage.Link("name:=eSign", "index:=0")	
+	Set objWebPage = Nothing
+    
+End Function
+
+
+
+'This function is used to Accept the consent and eSign the documents.
+'@code
+'    BIZ_DisclosureTrackingWeb_LoanCenter_AcceptAndeSign(strRowID)
+'@endcode 
+'@param strRowID The numeric or string unique ID that used to find the line in the data spreadsheet
+
+Function BIZ_DisclosureTrackingWeb_LoanCenter_AcceptAndeSign(strLoanNumber, strRowID)
+	
+    Dim objWebPage, objData, strBorrowerName, strAuthCode
+    FRM_Logger_ReportInfoEvent "Accept consent and eSign docs", "eSign docs using Row Id '"&strRowID&"' in the eFolder_Tab datasheet", Null
+    k=""
+    Set objWebPage  = Browser("name:=.*Ellie Mae.*", "index:=0").Page("title:=.*Ellie Mae.*", "index:=0")
+    Set objData     = FRM_DS_GetTestData("eFolder_Tab", "SendeDisclosures", strRowID)    
+    strBorrowerName = FRM_DS_GetValue(objData, "BorrowerName")
+    
+    If objWebPage.Link("name:=I Agree", "index:=0").Exist(3) Then
+		GUI_Link_Click objWebPage.Link("name:=I Agree", "index:=0")
+	End If	
+	'GUI_Object_WaitTillExist objWebPage.WebEdit("html id:=passwordTextBox")  
+    
+    strAuthCode = FRM_DS_GetValue(objData, "BorrowerCode")
+	If objWebPage.WebEdit("html id:=passwordTextBox").Exist(120) Then
+		GUI_WebEdit_Set objWebPage.WebEdit("html id:=passwordTextBox"), strAuthCode
+	End If	
+	GUI_Link_Click objWebPage.Link("html id:=NextButton_linkButton")
+	
+	If Browser("name:=DocuSign").Page("title:=DocuSign").WebButton("html id:=action-bar-btn-continue","innertext:=Next","index:=0", "html tag:=BUTTON").Exist(60) Then
+	   BIZ_WebCenter_DocuSignSignDocument 
+	Else
+		If GUI_Object_IsExist(objWebPage.WebElement("innertext:=Loan Estimate", "index:=0")) Then
+			BIZ_DisclosureTrackingWeb_LoanCenter_eSignNext 3
+		Elseif GUI_Object_IsExist(objWebPage.WebElement("innertext:=Closing Disclosure", "index:=0")) Then
+			BIZ_DisclosureTrackingWeb_LoanCenter_eSignNext 5
+		Else
+			'This part of logic added because of new changes in application. There is posibility that it will need to be edited for different scenarios.
+			If Browser("name:=.*").Page("title:=.*").WebButton("html id:=action-bar-btn-continue","innertext:=Next","index:=0").Exist(5) Then
+				Browser("name:=.*").Page("title:=.*").WebButton("html id:=action-bar-btn-continue","innertext:=Next","index:=0").Click
+			End If
+			If Browser("name:=.*").Page("title:=.*").Image("title:=Sign Here","index:=0").Exist(5) Then
+				Browser("name:=.*").Page("title:=.*").Image("title:=Sign Here","index:=0").Click
+			End If	
+			If Browser("name:=.*").Page("title:=.*").WebButton("html id:=action-bar-bottom-btn-finish","innertext:=FINISH").Exist(5) Then	
+				Browser("name:=.*").Page("title:=.*").WebButton("html id:=action-bar-bottom-btn-finish","innertext:=FINISH").Click    
+			End If	
+			k = "SkipTheseSteps"		
+		End If	
+		
+		If k="" then
+			GUI_Object_WaitTillExist objWebPage.Image("html id:=img0")
+			GUI_Image_Click objWebPage.Image("html id:=img0")
+			GUI_Link_Click objWebPage.Link("html id:=SignButton_linkButton")
+			
+			'Borrower - 'Back to Loan Detail' button's html id
+			If GUI_Object_IsExistX(objWebPage.Link("html id:=CancelButton_linkButton"), 10) Then
+				GUI_Link_Click objWebPage.Link("html id:=CancelButton_linkButton","index:=0")
+			End If
+			
+			'CoBorrower - 'Back to Loan Detail' button's html id
+			If GUI_Object_IsExistX(objWebPage.Link("html id:=CloseButton_linkButton"), 30) Then
+				GUI_Link_Click objWebPage.Link("html id:=CloseButton_linkButton","index:=0")
+			End If
+		End If	
+	End If	
+	Set objWebPage = Nothing
+	Set objData    = Nothing
+    
+End Function
+
+
+
+'@code
+'    BIZ_DisclosureTrackingWeb_LoanCenter_eSignNext()
+'@endcode 
+'param intNumPages
+
+Private Function BIZ_DisclosureTrackingWeb_LoanCenter_eSignNext(intNumPages)
+
+    Set objWebPage = Browser("name:=.*Ellie Mae.*", "index:=0").Page("title:=.*Ellie Mae.*", "index:=0")
+    
+    For i=1 To intNumPages-1
+	    GUI_Object_WaitTillExist objWebPage.WebElement("innertext:=Viewing "&i&" of "&intNumPages&" pages", "index:=0")
+        GUI_Link_Click objWebPage.Link("html id:=NextButton_linkButton")
+    Next
+    
+    Set objWebPage = Nothing
+End Function 
+
+
+
+'This function is used to Accept the econsent 
+'@code
+'    BIZ_DisclosureTrackingWeb_AcceptEConsent()
+'@endcode 
+
+Function BIZ_DisclosureTrackingWeb_AcceptEConsent()
+	
+	FRM_Logger_ReportInfoEvent "Accept e Consent", "Accepting econsent using Loan Center", null
+	If (GUI_Object_IsExist(Browser("name:=.*Ellie Mae.*", "index:=0").Page("title:=.*Ellie Mae.*", "index:=0"))) Then 
+		Set objWebPage = Browser("name:=.*Ellie Mae.*", "index:=0").Page("title:=.*Ellie Mae.*", "index:=0")
+	End If
+	If (GUI_Object_IsExist(Browser("name:=.*Mortgage.*", "index:=0").Page("title:=.*Mortgage.*", "index:=0"))) Then 
+		Set objWebPage = Browser("name:=.*Mortgage.*", "index:=0").Page("title:=.*Mortgage.*", "index:=0")
+	End If
+	If GUI_Object_IsExist(objWebPage.WebElement("html id:=ctl01_contentContainerHolder_gvLoans_ctl02_lbBorrowerName"))   Then
+		GUI_WebElement_Click objWebPage.WebElement("html id:=ctl01_contentContainerHolder_gvLoans_ctl02_lbBorrowerName")	
+		'blnReviewRequest  = objWebPage.WebElement("html tag:=SPAN","innertext:=*. to review the consent to do business electronically.*").getroproperty("visible")
+		'If(blnReviewRequest = False) Then 
+		'	GUI_Link_Click objWebPage.Link("text:=Electronic Signature Consent for Loan Documents","html tag:=A")
+		'End If
+		GUI_Link_Click objWebPage.Link("name:=View")
+		GUI_Link_Click objWebPage.Link("name:=I Agree")
+		GUI_Link_Click objWebPage.Link("name:=Done")
+		GUI_Link_Click objWebPage.Link("innertext:=Electronic Signature Consent for Loan Documents")
+		GUI_Object_ValidateExists objWebPage.WebElement("innertext:=Consent Accepted", "html tag:=SPAN"), 3, "Consent Accepted"
+	End If
+        Set objWebPage = Nothing
+End Function
+
+
+
+'This function is used to eSign
+'@code
+'	BIZ_DisclosureTrackingWeb_LoanCenter_eSign(strRowID, intBorrowerIdx, flageSign)
+'@endcode 
+'@param strRowID The numeric or string unique ID that used to find the line in the data spreadsheet
+'@param intBorrowerIdx - 1 for Borrower, 2 for CoBorrower
+'@param flageSign True for eSign , False to only view
+Function BIZ_DisclosureTrackingWeb_LoanCenter_eSign(strRowID, intBorrowerIdx, flageSign)
+	FRM_Logger_ReportInfoEvent "eSign docs", "eSign docs using Row Id '"&strRowID&"' in the eFolder_Tab datasheet", null
+    
+	Set objWebPage = Browser("name:=.*Ellie Mae.*", "index:=0").Page("title:=.*Ellie Mae.*", "index:=0")
+	Set objData    = FRM_DS_GetTestData("eFolder_Tab", "SendeDisclosures", strRowID)
+	If intBorrowerIdx = 1 Then
+	    	strBorrowerName = FRM_DS_GetValue(objData, "BorrowerName")
+		strAuthCode = FRM_DS_GetValue(objData, "BorrowerCode")
+	Else
+		strCoBorrowerName = FRM_DS_GetValue(objData, "CoBorrowerName")
+		strAuthCode = FRM_DS_GetValue(objData, "CoBorrowerCode")
+	End If
+	
+	GUI_WebElement_Click objWebPage.WebElement("html id:=ctl01_contentContainerHolder_gvLoans_ctl02_lbBorrowerName")	
+	'GUI_Link_Click objWebPage.Link("name:=Electronic Loan Document Request", "index:=0")
+	'If intBorrowerIdx = 1 Then
+	'	GUI_Link_Click objWebPage.Link("name:=" & strBorrowerName, "index:=0")
+	'Else
+	'	GUI_Link_Click objWebPage.Link("name:=" & strCoBorrowerName, "index:=0")
+	'End If
+	GUI_Link_Click objWebPage.Link("name:=eSign", "index:=0")
+	If GUI_Object_IsExistX(objWebPage.WebEdit("html id:=passwordTextBox"), 5) Then
+		GUI_WebEdit_Set objWebPage.WebEdit("html id:=passwordTextBox"), strAuthCode
+		GUI_Link_Click objWebPage.Link("html id:=NextButton_linkButton")
+		wait 5
+	End If	
+	'If GUI_Object_IsExist(objWebPage.WebElement("innertext:=Loan Estimate", "index:=0")) Then
+	'   	For i=1 To 2
+        '		GUI_Object_WaitTillExist objWebPage.WebElement("innertext:=Viewing "&i&" of .*", "index:=0")
+        '		GUI_Link_Click objWebPage.Link("html id:=NextButton_linkButton")
+        '	Next
+	'ElseIf GUI_Object_IsExist(objWebPage.WebElement("innertext:=Closing Disclosure", "index:=0")) Then
+	'   	For i=1 To 4
+        '		GUI_Object_WaitTillExist objWebPage.WebElement("innertext:=Viewing "&i&" of .*", "index:=0")
+        '		GUI_Link_Click objWebPage.Link("html id:=NextButton_linkButton")
+        '	Next 
+	'End If
+	'If Not GUI_Object_IsExist(objWebPage.Image("html id:=img0")) Then
+	'	GUI_Link_Click objWebPage.Link("html id:=NextButton_linkButton")
+	'End If
+	'If flageSign Then
+	'	GUI_Object_WaitTillExist objWebPage.Image("html id:=img0")
+	'	GUI_Image_Click objWebPage.Image("html id:=img0")
+	'	GUI_Link_Click objWebPage.Link("html id:=SignButton_linkButton")
+	'	If GUI_Object_IsExistX(objWebPage.Link("html id:=CancelButton_linkButton","index:=0"), 10) Then
+	'		GUI_Link_Click objWebPage.Link("html id:=CancelButton_linkButton","index:=0")
+	'	Else
+	'		GUI_Link_Click objWebPage.Link("html id:=CloseButton_linkButton","index:=0")
+	'	End If
+	'Else
+	'	GUI_Link_Click objWebPage.Link("html id:=CancelButton_linkButton")
+	'	GUI_WinButton_Click Browser("name:=.*Ellie Mae.*", "index:=0").Dialog("text:=Message from webpage").WinButton("text:=OK")
+	'End If
+	GUI_WebButton_Click Browser("name:=DocuSign").Page("title:=DocuSign").WebButton("html id:=action-bar-btn-continue")
+	wait 2
+	GUI_WebButton_Click Browser("name:=DocuSign").Page("title:=DocuSign").WebButton("name:=Start", "type:=button", "html tag:=BUTTON", "index:=0")
+	wait 3
+	If flageSign Then
+		GUI_Object_WaitTillExist Browser("name:=DocuSign").Page("title:=DocuSign").WebButton("name:=SignRequired - Sign Here","type:=button", "html tag:=BUTTON", "index:=0")
+		GUI_WebButton_Click Browser("name:=DocuSign").Page("title:=DocuSign").WebButton("name:=SignRequired - Sign Here")
+		IF GUI_Object_IsExistX(Browser("name:=DocuSign").Page("title:=DocuSign").WebButton("name:=Adopt and Sign", "type:=button", "html tag:=BUTTON", "index:=0"), 5) Then
+			GUI_WebButton_Click Browser("name:=DocuSign").Page("title:=DocuSign").WebButton("name:=Adopt and Sign", "type:=button", "html tag:=BUTTON", "index:=0")
+		End IF
+		wait 3
+		GUI_WebButton_Click Browser("name:=DocuSign").Page("title:=DocuSign").WebButton("html id:=action-bar-btn-finish")
+	Else
+		GUI_WebButton_Click Browser("name:=DocuSign").Page("title:=DocuSign").WebButton("name:=Other Actions.*", "type:=button", "html tag:=BUTTON", "index:=0")
+		wait 2
+		GUI_WebButton_Click Browser("name:=DocuSign").Page("title:=DocuSign").WebButton("name:=Finish Later.*", "type:=button", "html tag:=BUTTON", "index:=0")
+	End If
+    
+    Set objData    = Nothing
+    Set objWebPage = Nothing
+    
+End Function
+
+
+
+'This function is used to Accept the econsent 
+'@code
+'    BIZ_DisclosureTrackingWeb_AcceptEConsentWithBorrowerType(strRowID,strBorrowerOrCoBorrower))
+'@endcode 
+'@param strRowID The numeric or string unique ID that used to find the line in the data spreadsheet
+'@param strBorrowerOrCoBorrower select the record based on Borrower/CoBorrower
+
+Function BIZ_DisclosureTrackingWeb_AcceptEConsentWithBorrowerType(strRowID,strBorrowerOrCoBorrower)
+	If (GUI_Object_IsExist(Browser("name:=.*Ellie Mae.*", "index:=0").Page("title:=.*Ellie Mae.*", "index:=0"))) Then 
+		Set objWebPage = Browser("name:=.*Ellie Mae.*", "index:=0").Page("title:=.*Ellie Mae.*", "index:=0")
+	End If
+	If(GUI_Object_IsExist(Browser("name:=.*Mortgage.*", "index:=0").Page("title:=.*Mortgage.*", "index:=0"))) Then 
+		Set objWebPage = Browser("name:=.*Mortgage.*", "index:=0").Page("title:=.*Mortgage.*", "index:=0")
+	End If
+	
+	If(InStr(strBorrowerOrCoBorrower, "Borrower") > 0) Then 
+		Set objData = FRM_DS_GetTestData("Forms_BorrowerSummaryOrigination", "SetBorrower", strRowID)
+		strBorrowerName = FRM_DS_GetValue(objData, "FirstName")&" "&FRM_DS_GetValue(objData, "LastName")
+	Else
+		Set objData = FRM_DS_GetTestData("Forms_BorrowerSummaryOrigination", "SetCoBorrower", strRowID)
+		strBorrowerName = FRM_DS_GetValue(objData, "FirstName")&" "&FRM_DS_GetValue(objData, "LastName")
+	End If
+	strLoanNumber = BIZ_Loan_GetLoanNumber()
+	If BIZ_DisclosureTrackingWeb_OpenLoanDetails(strBorrowerName, strLoanNumber) Then       
+		GUI_Link_Click objWebPage.Link("name:=View")
+		GUI_Link_Click objWebPage.Link("name:=I Agree")
+		GUI_Link_Click objWebPage.Link("name:=Done")
+		GUI_Link_Click objWebPage.Link("innertext:=Electronic Signature Consent for Loan Documents")
+		GUI_Object_ValidateExists objWebPage.WebElement("innertext:=Consent Accepted", "html tag:=SPAN"), 3, "Consent Accepted"
+	End If
+End Function
+
+
+
+'This function is used to Accept the consent and eSign the documents.
+'@code
+'    BIZ_DisclosureTrackingWeb_LoanCenter_AcceptNSigneSignDocument(strLoanNumber,strRowID)
+'@endcode
+'@param strLoanNumber - Loan number of the currently opened loan
+'@param strRowID - The numeric or string unique ID that used to find the line in the data spreadsheet
+
+Function BIZ_DisclosureTrackingWeb_LoanCenter_AcceptNSigneSignDocument(strLoanNumber, strRowID)
+	
+    FRM_Logger_ReportInfoEvent "Accept consent and eSign docs", "eSign docs using Row Id '"&strRowID&"' in the eFolder_Tab datasheet", null
+	
+	Dim objWebPage,objData,strBorrowerName,strAuthCode
+   	k=""
+    If(GUI_Object_IsExistX(Browser("name:=.*Ellie Mae.*", "index:=0").Page("title:=.*Ellie Mae.*", "index:=0"), 60)) Then 
+		Set objWebPage = Browser("name:=.*Ellie Mae.*", "index:=0").Page("title:=.*Ellie Mae.*", "index:=0")
+	ElseIf(GUI_Object_IsExist(Browser("name:=.*Mortgage.*", "index:=0").Page("title:=.*Mortgage.*", "index:=0"))) Then 
+		Set objWebPage = Browser("name:=.*Mortgage.*", "index:=0").Page("title:=.*Mortgage.*", "index:=0")
+	End If
+    Set objData    = FRM_DS_GetTestData("eFolder_Tab", "SendeDisclosures", strRowID)
+	
+    strBorrowerName = FRM_DS_GetValue(objData, "BorrowerName")
+    If BIZ_DisclosureTrackingWeb_OpenLoanDetails(strBorrowerName, strLoanNumber) Then
+    	GUI_Link_Click objWebPage.Link("name:=eSign", "index:=0")
+  	   	If objWebPage.Link("name:=I Agree", "index:=0").Exist(30) then
+			GUI_Link_Click objWebPage.Link("name:=I Agree", "index:=0")
+		End If
+	
+		GUI_Object_WaitTillExist objWebPage.WebEdit("html id:=passwordTextBox")
+	    	strAuthCode = FRM_DS_GetValue(objData, "BorrowerCode")
+		
+		If objWebPage.WebEdit("html id:=passwordTextBox").Exist(120) Then
+			GUI_WebEdit_Set objWebPage.WebEdit("html id:=passwordTextBox"), strAuthCode
+		End If	
+		If objWebPage.Link("html id:=NextButton_linkButton").Exist(30) Then 
+			GUI_Link_Click objWebPage.Link("html id:=NextButton_linkButton")
+			wait g_TinyWaitSmall
+			Set objDocSign = Browser("name:=DocuSign").Page("title:=DocuSign")
+			objDocSign.WebButton("name:=Next","index:=0").Click
+			wait g_TinyWaitSmall
+			objDocSign.WebButton("name:=Start","index:=0").Click
+			wait g_TinyWaitSmall
+			If GUI_Object_IsExistX(objDocSign.WebButton("name:=Adopt and Sign","type:=button","html tag:=BUTTON"), 5) Then 
+				objDocSign.WebButton("name:=Adopt and Sign","type:=button","html tag:=BUTTON").Click
+				wait g_TinyWaitSmall
+			End If
+			For intIndex = 0 to 100 Step 1
+				If GUI_Object_IsExistX(objDocSign.WebRadioGroup("html tag:=INPUT","name:=Check Here_.*","index:="&intIndex), 5) Then 
+					objDocSign.WebRadioGroup("html tag:=INPUT","name:=Check Here_.*","index:="&intIndex).Click
+					If GUI_Object_IsExistX(objDocSign.WebButton("name:=SignRequired - Sign Here","index:="&intIndex), 5) Then
+						objDocSign.WebButton("name:=SignRequired - Sign Here","index:="&intIndex).Click
+						wait g_TinyWaitSmall
+					End If
+					If GUI_Object_IsExistX(objDocSign.WebButton("name:=Next","index:="&intIndex+1,"html tag:=BUTTON","type:=button"),5) Then
+						objDocSign.WebButton("name:=Next","index:="&intIndex+1,"html tag:=BUTTON","type:=button").Click
+					End If
+				Else
+					Exit For
+				End If
+			Next
+			If GUI_Object_IsExistX(objDocSign.WebButton("name:=SignRequired - Sign Here","index:=1"), 5)Then
+				objDocSign.WebButton("name:=SignRequired - Sign Here","index:=1").Click
+				wait g_TinyWaitSmall
+			End If
+			If(GUI_Object_IsExistX(objDocSign.WebButton("name:=SignRequired - Sign Here","index:=1"), 5))Then
+				objDocSign.WebButton("name:=SignRequired - Sign Here","index:=1").Click
+			End If
+			wait g_TinyWaitSmall
+			If(GUI_Object_IsExistX(objDocSign.WebButton("name:=SignRequired - Sign Here","index:=1"), 5))Then
+				objDocSign.WebButton("name:=SignRequired - Sign Here","index:=1").Click
+			End If
+			If(GUI_Object_IsExistX(objDocSign.WebButton("name:=SignRequired - Sign Here","index:=2"), 5))Then
+				objDocSign.WebButton("name:=SignRequired - Sign Here","index:=2").Click
+			End If
+			If(GUI_Object_IsExistX(objDocSign.WebButton("name:=SignRequired - Sign Here","index:=3"), 5))Then
+				objDocSign.WebButton("name:=SignRequired - Sign Here","index:=3").Click
+			End If
+			If(GUI_Object_IsExistX(objDocSign.WebButton("name:=SignRequired - Sign Here","index:=4"), 5))Then
+				objDocSign.WebButton("name:=SignRequired - Sign Here","index:=4").Click
+			End If
+			If GUI_Object_IsExistX(objDocSign.WebButton("name:=Adopt and Sign","type:=button","html tag:=BUTTON"), 15) Then 
+				objDocSign.WebButton("name:=Adopt and Sign","type:=button","html tag:=BUTTON").Click
+				wait g_TinyWaitSmall
+			End If
+			While GUI_Object_IsExist(objDocSign.WebButton("name:=SignRequired - Sign Here","index:=0"))
+				objDocSign.WebButton("name:=SignRequired - Sign Here","index:=0").Highlight
+				objDocSign.WebButton("name:=SignRequired - Sign Here","index:=0").Click
+				wait g_TinyWaitSmall
+			Wend
+		
+			objDocSign.WebButton("name:=Finish","index:=0").Click
+
+			End If	
+
+			Wait g_LongWaitLarge 
+		
+			strPageText = Browser("name:=.*Ellie Mae.*", "index:=0").Page("title:=.*Ellie Mae.*", "index:=0").GetROProperty("innertext")
+			If(InStr(strPageText, "eSigned") > 0) Then
+				FRM_Logger_ReportPassEvent "click on required -sign here in all places and click finish", "In the loan center page it is showed as e-signed.", Null
+			ElseIf (InStr(strPageText, "Consent Accepted") > 0) Then
+				FRM_Logger_ReportPassEvent "click on required -sign here in all places and click finish", "In the loan center page it is showed as Consent Accepted.", Null
+			Else
+				FRM_Logger_ReportFailEvent "click on required -sign here in all places and click finish", "In the loan center page it is not showed as e-signed/Consent Accepted.", Null
+			End If
+		Else
+				FRM_Logger_ReportFailEvent "click on e-sign", "Authorisation Screen and Document Sign window is not displayed", Null
+		End If
+	Set objWebPage  = Nothing
+	Set objData     = Nothing
+End Function
+
+
+'This function is used to Accept the consent and eSign the documents.
+'@code
+'    BIZ_DisclosureTrackingWeb_LoanCenter_AcceptNSigneSignDocument(strLoanNumber,strRowID)
+'@endcode
+'@param strLoanNumber - Loan number of the currently opened loan
+'@param strRowID - The numeric or string unique ID that used to find the line in the data spreadsheet
+
+Function BIZ_DisclosureTrackingWeb_LoanCenter_UploadDocuments(strLoanNumber, strRowID)
+	
+    FRM_Logger_ReportInfoEvent "Upload documents", "Upload docs using Row Id '"&strRowID&"' in the eFolder_Tab datasheet", null
+	
+	Dim objWebPage,objData,strBorrowerName,strAuthCode
+    If(GUI_Object_IsExistX(Browser("name:=.*Ellie Mae.*", "index:=0").Page("title:=.*Ellie Mae.*", "index:=0"), 60)) Then 
+		Set objWebPage = Browser("name:=.*Ellie Mae.*", "index:=0").Page("title:=.*Ellie Mae.*", "index:=0")
+	ElseIf(GUI_Object_IsExist(Browser("name:=.*Mortgage.*", "index:=0").Page("title:=.*Mortgage.*", "index:=0"))) Then 
+		Set objWebPage = Browser("name:=.*Mortgage.*", "index:=0").Page("title:=.*Mortgage.*", "index:=0")
+	End If
+    Set objData    = FRM_DS_GetTestData("eFolder_Tab", "SendeDisclosures", strRowID)
+    
+   	strBorrowerName = FRM_DS_GetValue(objData, "BorrowerName")
+	strFileName = FRM_DS_GetValue(objData, "FileName")
+	
+    If BIZ_DisclosureTrackingWeb_OpenLoanDetails(strBorrowerName, strLoanNumber) Then
+    	objWebPage.Link("text:=Upload","html tag:=A","index:=0").Click
+		wait g_tinywaitsmall
+		Browser("name:=.*Ellie Mae.*", "index:=1").Page("index:=0").WebFile("name:=ctl.*","html tag:=INPUT","type:=file").Set FRM_RT_DataDirPath() & strFileName
+		wait g_tinywaitsmall
+		Browser("name:=.*Ellie Mae.*", "index:=1").Page("index:=0").Link("text:=Upload File","html tag:=A").click
+		wait g_tinywaitsmall
+		strTableText = Browser("name:=.*Ellie Mae.*", "index:=0").Page("index:=0").WebTable("index:=0","html tag:=TABLE").GetROProperty("innertext")
+		If(InStr(strTableText, "Uploaded") > 0) Then
+			FRM_Logger_ReportPassEvent "Upload documents", "In loan center 'uploaded' should be seen with a checkmark with a lock confirmation",Null
+		End If
+	End If	
+	Set objWebPage  = Nothing
+	Set objData     = Nothing
+End Function
+
+
+'This function is used to Accept the consent and eSign the documents.
+'@code
+'    BIZ_DisclosureTrackingWeb_SaveE2ELoanNumberAndSendeDisclosure(strSelectPackageTypeRowID, strSelectDisclosureDocRowID, strSendDisclosureRowID, strLoanCenterRowID)
+'@endcode
+'@param strLoanCenterLoginRowID - Loan Center Login ID 
+'@param streDisclosureDocRowID - Disclosure Login Row ID
+Function BIZ_DisclosureTrackingWeb_SaveE2ELoanNumberAndSendeDisclosure(strSelectPackageTypeRowID, strSelectDisclosureDocRowID, strSendDisclosureRowID, strLoanCenterRowID)
+	SwfWindow("swfname:=MainForm").SwfWindow("swfname:=MainScreen").Highlight
+	BIZ_Forms_Open "Borrower Summary - Origination"
+    Set objSummaryPage = SwfWindow("swfname:=MainForm").Page("title:=.*","index:=0")
+    strFirstName = GUI_Object_GetPropertyValue(objSummaryPage.WebEdit("html id:=l_36"),"value")  
+	strLastName = GUI_Object_GetPropertyValue(objSummaryPage.WebEdit("html id:=l_37"), "value")
+	strBorrowerName  = strFirstName & " " &   strLastName
+	FRM_DS_ChangeExcelReadonlyToReadandWrite "eFolder_Tab"
+	FRM_DS_SetCellData "eFolder_Tab", "SendeDisclosures", strLoanCenterRowID, "BorrowerName", strBorrowerName
+	FRM_DS_ChangeExcelReadandWriteToReadonly  "eFolder_Tab"
+	'Open the eFolder Screen
+	BIZ_Nav_eFoler_Open()
+	Wait g_TinyWaitLarge
+	GUI_Object_ValidateExists SwfWindow("swfname:=eFolderDialog"), 5, "E Folder screen is opened"
+	'Send eDisclosure information
+	BIZ_DisclosureTrackingWeb_SaveE2ELoanNumberAndSendeDisclosure  = BIZ_Documents_SendeDisclosure(strSelectPackageTypeRowID, strSelectDisclosureDocRowID, strSendDisclosureRowID)
+	GUI_Object_WaitTillExistX SwfWindow("swfname:=eFolderDialog").SwfButton("swfname:=btnClose"), 360
+	Wait g_TinyWaitLarge
+End Function 	
+
+
+
+'This function is used to Accept the consent and eSign the documents.
+'@code
+'    BIZ_DisclosureTrackingWeb_LoanCenter_LoginNToCenterAccepteSign(strLoanCenterLoginRowID, streDisclosureDocRowID)
+'@endcode
+'@param strLoanCenterLoginRowID - Loan Center Login ID 
+'@param streDisclosureDocRowID - Disclosure Login Row ID
+Function BIZ_DisclosureTrackingWeb_LoanCenter_LoginNToCenterAccepteSign(strLoanCenterLoginRowID, streDisclosureDocRowID)
+	GUI_Browser_CloseAllBrowsers g_DefaultBrowser
+	BIZ_LoanCenter_LogIn strLoanCenterLoginRowID
+	strLoanNumber = BIZ_Loan_GetLoanNumber()
+	BIZ_DisclosureTrackingWeb_LoanCenter_AcceptNSigneSignDocument strLoanNumber, streDisclosureDocRowID
+	BIZ_WebCenter_LogOut()
+End Function 
+
+
+'This function is used to Accept the consent and eSign the documents.
+'@code
+'    BIZ_DisclosureTrackingWeb_SaveE2ELoanNumberAndSendRequest(strLoanCenterRowID, strRequestRowID)
+'@endcode
+'@param strLoanCenterRowID - Loan Center Login ID 
+Function BIZ_DisclosureTrackingWeb_SaveE2ELoanNumberAndSendRequest(strLoanCenterRowID, strRequestRowID)
+	SwfWindow("swfname:=MainForm").SwfWindow("swfname:=MainScreen").Highlight
+	BIZ_Forms_Open "Borrower Summary - Origination"
+    Set objSummaryPage = SwfWindow("swfname:=MainForm").Page("title:=.*","index:=0")
+    strFirstName = GUI_Object_GetPropertyValue(objSummaryPage.WebEdit("html id:=l_36"),"value")  
+	strLastName = GUI_Object_GetPropertyValue(objSummaryPage.WebEdit("html id:=l_37"), "value")
+	strBorrowerName  = strFirstName & " " &   strLastName
+	FRM_DS_ChangeExcelReadonlyToReadandWrite "eFolder_Tab"
+	FRM_DS_SetCellData "eFolder_Tab", "SendeDisclosures", strLoanCenterRowID, "BorrowerName", strBorrowerName
+	FRM_DS_ChangeExcelReadandWriteToReadonly  "eFolder_Tab"
+	'Clicks on eFolder
+	BIZ_Nav_eFoler_Open()
+	BIZ_DisclosureTrackingWeb_SaveE2ELoanNumberAndSendRequest  = BIZ_Documents_SendRequest(strRequestRowID)
+End Function	
+
+
+'This function is used to Accept the consent and eSign the documents.
+'@code
+'    BIZ_DisclosureTrackingWeb_SaveE2ELoanNumberAndSendeConsent(strLoanCenterRowID, bolBorrower, bolCoBorrower)
+'@endcode
+'@param strLoanCenterRowID - Loan Center Login ID 
+Function BIZ_DisclosureTrackingWeb_SaveE2ELoanNumberAndSendeConsent(strLoanCenterRowID, bolBorrower, bolCoBorrower)
+	SwfWindow("swfname:=MainForm").SwfWindow("swfname:=MainScreen").Highlight
+	BIZ_Forms_Open "Borrower Summary - Origination"
+	
+	Wait g_TinyWaitMedium
+
+    Set objSummaryPage = SwfWindow("swfname:=MainForm").Page("title:=.*","index:=0")
+    strFirstName = GUI_Object_GetPropertyValue(objSummaryPage.WebEdit("html id:=l_36"),"value")  
+	strLastName = GUI_Object_GetPropertyValue(objSummaryPage.WebEdit("html id:=l_37"), "value")
+	strBorrowerName  = strFirstName & " " &   strLastName
+	FRM_DS_ChangeExcelReadonlyToReadandWrite "eFolder_Tab"
+	FRM_DS_SetCellData "eFolder_Tab", "SendeDisclosures", strLoanCenterRowID, "BorrowerName", strBorrowerName
+	FRM_DS_ChangeExcelReadandWriteToReadonly  "eFolder_Tab"
+	'Clicks on eFolder
+	BIZ_Nav_eFoler_Open()
+	BIZ_Documents_SendeConsent bolBorrower, bolCoBorrower
+End Function	
+
+'@}	

@@ -1,0 +1,14 @@
+﻿<Properties>
+  <WatchEntry0 value="strItemsList" />
+  <WatchEntry1 value="strActualWord" />
+  <WatchEntry10 value="boolToBeChecked" />
+  <WatchEntry11 value="strActualSearchText" />
+  <WatchEntry2 value="itemIndex" />
+  <WatchEntry3 value="isExisted" />
+  <WatchEntry4 value="arrSearchText" />
+  <WatchEntry5 value="strActualSearchText" />
+  <WatchEntry6 value="itemIndex" />
+  <WatchEntry7 value="itemIndex" />
+  <WatchEntry8 value="i" />
+  <WatchEntry9 value="isChecked" />
+</Properties>

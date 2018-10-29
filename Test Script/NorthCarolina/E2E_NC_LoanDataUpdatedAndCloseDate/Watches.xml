@@ -1,0 +1,4 @@
+﻿<Properties>
+  <WatchEntry0 value="value" />
+  <WatchEntry1 value="(GUI_Object_GetPropertyValue (objMainPage.WebEdit (&quot;title:=1050.*&quot;),&quot;value&quot;),2)" />
+</Properties>

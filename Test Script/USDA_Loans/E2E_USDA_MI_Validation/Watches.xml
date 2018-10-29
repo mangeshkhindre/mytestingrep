@@ -1,0 +1,6 @@
+﻿<Properties>
+  <WatchEntry0 value="strItemName" />
+  <WatchEntry1 value="value" />
+  <WatchEntry2 value="value" />
+  <WatchEntry3 value="FRM_DS_GetValue(objData, &quot;1198_Months&quot;)" />
+</Properties>

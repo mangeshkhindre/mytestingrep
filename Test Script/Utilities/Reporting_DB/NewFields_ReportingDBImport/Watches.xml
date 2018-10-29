@@ -1,0 +1,5 @@
+﻿<Properties>
+  <WatchEntry0 value="SwfWindow(&quot;swfname:= LoanXDBManager&quot;).SwfWindow(&quot;swfname:= AddFields&quot;).Dialog(&quot;text:=Open&quot;).WinButton(&quot;text:=&amp;Open&quot;)" />
+  <WatchEntry1 value="SwfWindow(&quot;swfname:= LoanXDBManager&quot;).Dialog(&quot;index:=0&quot;,&quot;visible:=True&quot;,&quot;regexpwndtitle:=Rebuild Pipeline&quot;,&quot;swfname:=ProgressDialog.*&quot;).SwfLabel(&quot;swfname:=lblStatus.*&quot;)" />
+  <WatchEntry2 value="SwfWindow(&quot;swfname:= LoanXDBManager&quot;).Dialog(&quot;index:=0&quot;,&quot;visible:=True&quot;,&quot;regexpwndtitle:=Rebuild Pipeline&quot;,&quot;swfname:=ProgressDialog.*&quot;).SwfLabel(&quot;swfname:=lblStatus.*&quot;).WaitProperty(&quot;visible&quot;,&quot;false&quot;,100)" />
+</Properties>

@@ -1,0 +1,28 @@
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'@defgroup E2E_8VAPURARM_ConditionalApproval
+'List Of Functions here 
+'@code
+	'Function BIZ_PreliminaryConditions_FulfilledByDescription(strConditionName)
+'@endcode
+'@{
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+'This function is to fulfill the Condition
+'@code
+'    BIZ_PreliminaryConditions_FulfilledByDescription(strConditionName)
+'@endcode
+'@param strConditionName The Condition Name which will be fulfilled
+
+Function BIZ_PreliminaryConditions_FulfilledByDescription(strConditionName)
+	Dim  objPreliminaryDetails
+    Set objPreliminaryDetails = SwfWindow("swfname:=PreliminaryDetailsDialog")
+	
+    GUI_SwfCheckbox_Set objPreliminaryDetails.SwfCheckBox("swfname:=chkFulfilled"),"ON" 
+    GUI_SwfButton_Click objPreliminaryDetails.SwfButton("swfname:=btnClose") 
+    
+    Set objPreliminaryDetails = Nothing
+End Function
+
+
+
+'@}

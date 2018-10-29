@@ -1,0 +1,7 @@
+﻿<Properties>
+  <WatchEntry0 value="FRM_DS_GetValue(objData, &quot;801b_PaidBy&quot;)" />
+  <WatchEntry1 value="objData" />
+  <WatchEntry2 value="FRM_DS_GetValue" />
+  <WatchEntry3 value="value" />
+  <WatchEntry4 value="obj" />
+</Properties>

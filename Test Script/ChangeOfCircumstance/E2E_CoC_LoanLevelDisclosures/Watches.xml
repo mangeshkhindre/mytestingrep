@@ -1,0 +1,5 @@
+﻿<Properties>
+  <WatchEntry0 value="strPropName" />
+  <WatchEntry1 value="strExpectedValue" />
+  <WatchEntry2 value="strActualValue" />
+</Properties>

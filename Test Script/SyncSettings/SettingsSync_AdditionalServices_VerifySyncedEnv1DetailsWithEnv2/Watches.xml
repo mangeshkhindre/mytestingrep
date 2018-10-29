@@ -1,0 +1,9 @@
+﻿<Properties>
+  <WatchEntry0 value="strEmailBody" />
+  <WatchEntry1 value="strText" />
+  <WatchEntry2 value="boolExpression" />
+  <WatchEntry3 value="strEvent" />
+  <WatchEntry4 value="FRM_VerifyEqual" />
+  <WatchEntry5 value="value" />
+  <WatchEntry6 value="strTemplateName" />
+</Properties>

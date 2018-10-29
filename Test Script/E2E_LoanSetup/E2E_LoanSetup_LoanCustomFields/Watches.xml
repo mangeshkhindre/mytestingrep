@@ -1,0 +1,18 @@
+﻿<Properties>
+  <WatchEntry0 value="strFieldId" />
+  <WatchEntry1 value="strFieldId" />
+  <WatchEntry10 value="strTextBoxLE3" />
+  <WatchEntry11 value="strTextBox1" />
+  <WatchEntry12 value="strTextBox2" />
+  <WatchEntry13 value="strTextBox3" />
+  <WatchEntry14 value="flag" />
+  <WatchEntry15 value="strProperty" />
+  <WatchEntry2 value="arrCustomFields" />
+  <WatchEntry3 value="arrRowID" />
+  <WatchEntry4 value="strFormName" />
+  <WatchEntry5 value="arrCustomFields" />
+  <WatchEntry6 value="objPropertyGrid.GetValue(&quot;Size;Height&quot;)" />
+  <WatchEntry7 value="value" />
+  <WatchEntry8 value="strTextBoxLE1" />
+  <WatchEntry9 value="strTextBoxLE2" />
+</Properties>

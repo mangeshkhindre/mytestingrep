@@ -1,0 +1,8 @@
+﻿<Properties>
+  <WatchEntry0 value="strActualValue" />
+  <WatchEntry1 value="Replace(CStr(obj.GetROProperty(strPropName)), vbcrlf, &quot;&quot;)" />
+  <WatchEntry2 value="vbcrlf" />
+  <WatchEntry3 value="strExpectedValue" />
+  <WatchEntry4 value="strFieldDesc" />
+  <WatchEntry5 value="strPropName" />
+</Properties>

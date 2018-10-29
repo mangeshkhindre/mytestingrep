@@ -1,0 +1,127 @@
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'@defgroup BIZ_Forms_VOE BIZ_Forms_VOE
+'
+' List of functions here
+' @code
+'   Function BIZ_VOE_SetVOEData(strRowID)
+'	Function BIZ_Common_SetVOEData(objParentObject, strRowID)
+'@endcode
+' @{
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+'This function is for set VOE data in VOE form
+'@code
+'    BIZ_VOE_SetVOEData(strRowID)
+'@endcode
+'@param strRowID The numeric or string unique ID that used to find the line in the data spreadsheet
+
+Function BIZ_VOE_SetVOEData(strRowID)
+
+	BIZ_Forms_Open "VOE"	
+	FRM_Logger_ReportInfoEvent "VOE", "Set VOE data using Row Id '"&strRowID&"'", null
+      
+    Dim objNewEmloyment
+    Set objNewEmloyment = SwfWindow("swfname:=MainForm").SwfWindow("swfname:=NewResidenceDialog")
+    Set objData = FRM_DS_GetTestData("Forms_VOE", "SetVOEData", strRowID)
+    
+    GUI_SwfObject_Click SwfWindow("swfname:=MainForm").SwfObject("swfname:=btnNew")
+    Wait g_TinyWaitMedium
+	
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BorrowerType")) Then
+		If FRM_DS_GetValue(objData, "BorrowerType") = "Borrower" Then
+			GUI_SwfRadioButton_Click objNewEmloyment.SwfRadioButton("swfname:=brwBtn")
+		ElseIf FRM_DS_GetValue(objData, "BorrowerType") = "CoBorrower" Then
+			GUI_SwfRadioButton_Click objNewEmloyment.SwfRadioButton("swfname:=radioButton1")
+		End If
+	End If
+	
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "EmploymentStatus")) Then
+		If FRM_DS_GetValue(objData, "EmploymentStatus") = "Current" Then
+			GUI_SwfRadioButton_Click objNewEmloyment.SwfRadioButton("swfname:=currentBtn")
+		ElseIf FRM_DS_GetValue(objData, "EmploymentStatus") = "Prior" Then
+			GUI_SwfRadioButton_Click objNewEmloyment.SwfRadioButton("swfname:=priorBtn")
+		End If
+	End If
+	
+	GUI_SwfButton_Click objNewEmloyment.SwfButton("swfname:=okBtn")
+
+	Dim objVOEPage
+    Set objVOEPage = SwfWindow("swfname:=MainForm").Page("micClass:=Page")
+
+	BIZ_Common_SetVOEData objVOEPage, strRowID
+    
+	Set objVOEPage = Nothing
+	Set objData = Nothing
+	Set objNewEmloyment = Nothing
+
+End Function	
+
+
+
+'This function is for setting VOE data in VOE and 1003 page 2 form
+'@code
+'    BIZ_Common_SetVOEData(objParentObject, strRowID)
+'@endcode
+'@parm objParentObject - Parent object
+'@param strRowID - The numeric or string unique ID that used to find the line in the data spreadsheet
+
+Function BIZ_Common_SetVOEData(objParentObject, strRowID)
+		
+	Set objData = FRM_DS_GetTestData("Forms_VOE", "SetVOEData", strRowID)
+	
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BE0102_Name")) Then
+		GUI_WebEdit_Set  objParentObject.WebEdit("html id:=l_FE0002"), FRM_DS_GetValue(objData, "BE0102_Name")
+	End If	
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BE0136_PrintsSeeAttachedBorrowerAuthorizationonSignatureLine")) Then		
+		GUI_WebCheckBox_Set objParentObject.WebCheckBox("html id:=__cid_CheckBox1_Ctrl"), FRM_DS_GetValue(objData, "BE0136_PrintsSeeAttachedBorrowerAuthorizationonSignatureLine")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BE0104_Address")) Then
+		GUI_WebEdit_Set  objParentObject.WebEdit("html id:=l_FE0004"), FRM_DS_GetValue(objData, "BE0104_Address")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BE0105_City")) Then
+		GUI_WebEdit_Set  objParentObject.WebEdit("html id:=l_FE0005"), FRM_DS_GetValue(objData, "BE0105_City")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BE0106_State")) Then
+		GUI_WebEdit_Set  objParentObject.WebEdit("html id:=l_FE0006"), FRM_DS_GetValue(objData, "BE0106_State")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BE0107_Zip")) Then
+		GUI_WebEdit_Set  objParentObject.WebEdit("html id:=l_FE0007"), FRM_DS_GetValue(objData, "BE0107_Zip")
+	End If
+	If SwfWindow("swfname:=ZipcodeSelectorDialog").SwfObject("swfname:=dlgButtons").SwfButton("swfname:=btnOK").Exist(3) then
+	    SwfWindow("swfname:=ZipcodeSelectorDialog").SwfObject("swfname:=dlgButtons").SwfButton("swfname:=btnOK").Click
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BE0138_PrintUserNameAsTitle")) Then		
+		GUI_WebCheckBox_Set objParentObject.WebCheckBox("html id:=__cid_CheckBox2_Ctrl"), FRM_DS_GetValue(objData, "BE0138_PrintUserNameAsTitle")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BE0132_BusinessName")) Then
+		GUI_WebEdit_Set  objParentObject.WebEdit("html id:=l_FE0032"), FRM_DS_GetValue(objData, "BE0132_BusinessName")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BE0119_BasePay")) Then
+		GUI_WebEdit_Set  objParentObject.WebEdit("html id:=l_FE0019"), FRM_DS_GetValue(objData, "BE0119_BasePay")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BadgeNEmployeeID")) Then
+		SwfWindow("swfname:=MainForm").Page("micClass:=Page").WebEdit("html id:=TextBox1").Set FRM_DS_GetValue(objData, "BadgeNEmployeeID")
+	End if
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "FE0030_EmailID")) Then
+		SwfWindow("swfname:=MainForm").Page("micClass:=Page").WebEdit("html id:=l_FE0030").Set FRM_DS_GetValue(objData, "FE0030_EmailID")
+	End if
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "FE0032_BusinessName")) Then
+		SwfWindow("swfname:=MainForm").Page("micClass:=Page").WebEdit("html id:=l_FE0032").Set FRM_DS_GetValue(objData, "FE0032_BusinessName")
+	End if
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "FE0028_BusinessPhone")) Then
+		SwfWindow("swfname:=MainForm").Page("micClass:=Page").WebEdit("html id:=l_FE0028").Set FRM_DS_GetValue(objData, "FE0028_BusinessPhone")
+	End if
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "FE0098_Date")) Then
+		SwfWindow("swfname:=MainForm").Page("micClass:=Page").WebEdit("html id:=l_FE0098").Set FRM_DS_GetValue(objData, "FE0098_Date") 	
+	End if
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "FE0011_DateHired")) Then
+		SwfWindow("swfname:=MainForm").Page("micClass:=Page").WebEdit("html id:=l_FE0011").Set FRM_DS_GetValue(objData, "FE0011_DateHired")
+	End if
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BE0121_Bonus")) Then
+		SwfWindow("swfname:=MainForm").Page("micClass:=Page").WebEdit("html id:=l_FE0021").Set FRM_DS_GetValue(objData, "BE0121_Bonus")
+	End if
+	Set objData = Nothing
+	
+End Function
+
+'@}

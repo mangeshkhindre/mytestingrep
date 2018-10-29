@@ -1,0 +1,117 @@
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'@defgroup BIZ_Forms_VOR BIZ_Forms_VOR
+'
+'List of functions here
+'@code
+'   Function BIZ_VOR_SetVORData(strRowID)
+'	Function BIZ_Common_SetVORData(objParentObject, strRowID)
+'@endcode
+' @{
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+'This function is for set VOR data in VOR form
+'@code
+'    BIZ_VOE_SetVORData(strRowID)
+'@endcode
+'@param strRowID The numeric or string unique ID that used to find the line in the data spreadsheet
+
+Function BIZ_VOR_SetVORData(strRowID)
+
+	BIZ_Forms_Open "VOR"
+	
+	FRM_Logger_ReportInfoEvent "VOR", "Set VOR data using Row Id '"&strRowID&"'", null
+      
+    Dim objNewEmloyment
+    Set objNewEmloyment = SwfWindow("swfname:=MainForm").SwfWindow("swfname:=NewResidenceDialog")
+    Set objData = FRM_DS_GetTestData("Forms_VOR", "SetVORData", strRowID)
+    
+    GUI_SwfObject_Click SwfWindow("swfname:=MainForm").SwfObject("swfname:=btnNew")
+    	
+	
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BorrowerType")) Then
+		If FRM_DS_GetValue(objData, "BorrowerType") = "Borrower" Then
+			GUI_SwfRadioButton_Click objNewEmloyment.SwfRadioButton("swfname:=brwBtn")
+		ElseIf FRM_DS_GetValue(objData, "BorrowerType") = "CoBorrower" Then
+			GUI_SwfRadioButton_Click objNewEmloyment.SwfRadioButton("swfname:=radioButton1")
+		End If
+	End If
+	
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "EmploymentStatus")) Then
+		If FRM_DS_GetValue(objData, "EmploymentStatus") = "Current" Then
+			GUI_SwfRadioButton_Click objNewEmloyment.SwfRadioButton("swfname:=currentBtn")
+		ElseIf FRM_DS_GetValue(objData, "EmploymentStatus") = "Prior" Then
+			GUI_SwfRadioButton_Click objNewEmloyment.SwfRadioButton("swfname:=priorBtn")
+		End If
+	End If
+	
+	GUI_SwfButton_Click objNewEmloyment.SwfButton("swfname:=okBtn")
+
+	Dim objVORPage
+    Set objVORPage = SwfWindow("swfname:=MainForm").Page("micClass:=Page")
+
+	BIZ_Common_SetVORData objVORPage, strRowID
+    
+	Set objVORPage = Nothing
+	Set objData = Nothing
+	Set objNewEmloyment = Nothing
+
+End Function	
+
+
+
+'This function is for setting VOR data in VOR and 1003 page 2 form
+'@code
+'    BIZ_Common_SetVORData(objParentObject, strRowID)
+'@endcode
+'@parm objParentObject - Parent object
+'@param strRowID - The numeric or string unique ID that used to find the line in the data spreadsheet
+
+Function BIZ_Common_SetVORData(objParentObject, strRowID)
+		
+	Set objData = FRM_DS_GetTestData("Forms_VOR", "SetVORData", strRowID)
+	
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BR0198_Date")) Then
+		GUI_WebEdit_Set  objParentObject.WebEdit("html id:=l_FR0098"), FRM_DS_GetValue(objData, "BR0198_Date")
+	End If	
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BR0102_Name")) Then
+		GUI_WebEdit_Set  objParentObject.WebEdit("html id:=l_FR0002"), FRM_DS_GetValue(objData, "BR0102_Name")
+	End If	
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BR0105_Address")) Then
+		GUI_WebEdit_Set  objParentObject.WebEdit("html id:=l_FR0005"), FRM_DS_GetValue(objData, "BR0105_Address")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BR0109_City")) Then
+		GUI_WebEdit_Set  objParentObject.WebEdit("html id:=l_FR0009"), FRM_DS_GetValue(objData, "BR0109_City")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BR0110_State")) Then
+		GUI_WebEdit_Set  objParentObject.WebEdit("html id:=l_FR0010"), FRM_DS_GetValue(objData, "BR0110_State")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BR0111_Zip")) Then
+		GUI_WebEdit_Set  objParentObject.WebEdit("html id:=l_FR0011"), FRM_DS_GetValue(objData, "BR0111_Zip")
+	End If
+	if SwfWindow("swfname:=ZipcodeSelectorDialog").SwfObject("swfname:=dlgButtons").SwfButton("swfname:=btnOK").Exist(3) then
+	    SwfWindow("swfname:=ZipcodeSelectorDialog").SwfObject("swfname:=dlgButtons").SwfButton("swfname:=btnOK").Click
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BR0121_LandlordComments")) Then
+		GUI_WebEdit_Set  objParentObject.WebEdit("html id:=l_FR0021"), FRM_DS_GetValue(objData, "BR0121_LandlordComments")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BR0104_Address")) Then
+		GUI_WebEdit_Set  objParentObject.WebEdit("html id:=l_FR0004"), FRM_DS_GetValue(objData, "BR0104_Address")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BR0112_NoOfYears")) Then
+		GUI_WebEdit_Set  objParentObject.WebEdit("html id:=l_FR0012"), FRM_DS_GetValue(objData, "BR0112_NoOfYears")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BR0124_NoOfMonths")) Then
+		GUI_WebEdit_Set  objParentObject.WebEdit("html id:=l_FR0024"), FRM_DS_GetValue(objData, "BR0124_NoOfMonths")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BR0116_MnthlyPmt")) Then
+		GUI_WebEdit_Set  objParentObject.WebEdit("html id:=l_FR0016"), FRM_DS_GetValue(objData, "BR0116_MnthlyPmt")
+	End If
+	If UTIL_String_IsNotEmpty(FRM_DS_GetValue(objData, "BE0115_Rent")) Then		
+		GUI_WebCheckBox_Set objParentObject.WebCheckBox("html id:=__cid_CheckBox4_Ctrl"), FRM_DS_GetValue(objData, "BE0115_Rent")
+	End If	
+	
+	Set objData = Nothing
+	
+End Function
+
+'@}
