@@ -1,6 +1,0 @@
-﻿<Properties>
-  <WatchEntry0 value="strRowStatus" />
-  <WatchEntry1 value="ji" />
-  <WatchEntry2 value="obj.GetTOProperty(&quot;micClass&quot;)" />
-  <WatchEntry3 value="GUI_Object_Desc(obj)" />
-</Properties>

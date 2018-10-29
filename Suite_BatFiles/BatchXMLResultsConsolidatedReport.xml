@@ -1,3 +1,0 @@
-<?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="../ConsolidatedReport.xsl"?>
-<ReportViewer><EnvironmentDetails><Project/><User/><Environment/><Status/><DateTimeStamp/></EnvironmentDetails><TestSummaryReport><TotalTestCasesExeucted/><TotalTestCasesPassed/><TotalTestCasesFailed/></TestSummaryReport><TestCaseName>Settings_LoanTemplates_DataTemplate_TestCase</TestCaseName><TestCaseName>Settings_LoanTemplates_InputFormSets_TestCase</TestCaseName></ReportViewer>

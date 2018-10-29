@@ -1,9 +1,0 @@
-﻿<Properties>
-  <WatchEntry0 value="FRM_DS_GetValue(objData,&quot;1724_FirstQualPmntEdit&quot;)" />
-  <WatchEntry1 value="FRM_DS_GetValue(objData,&quot;1483_InitMinPmntEdit&quot;)" />
-  <WatchEntry2 value="value" />
-  <WatchEntry3 value="SubOrdnatWndw.SwfEdit(&quot;swfname:=textBox4&quot;,&quot;attribute/tag:=.*4487.*&quot;)" />
-  <WatchEntry4 value="SubOrdnatWndw.SwfEdit(&quot;swfname:=textBox4&quot;).Object.tag" />
-  <WatchEntry5 value="number1" />
-  <WatchEntry6 value="obj.Exist" />
-</Properties>

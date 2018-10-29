@@ -1,5 +1,0 @@
-﻿<Properties>
-  <WatchEntry0 value="FRM_DS_GetValue(objData,&quot;1724_FirstQualPmntEdit&quot;)" />
-  <WatchEntry1 value="FRM_DS_GetValue(objData,&quot;1483_InitMinPmntEdit&quot;)" />
-  <WatchEntry2 value="value" />
-</Properties>

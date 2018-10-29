@@ -1,9 +1,0 @@
-﻿<Properties>
-  <WatchEntry0 value="introw" />
-  <WatchEntry1 value="strRowNumOrIndex" />
-  <WatchEntry2 value="strColumnNumOrIndex" />
-  <WatchEntry3 value="strColumnName" />
-  <WatchEntry4 value="trim(objWorksheet.Cells(1, n).value)" />
-  <WatchEntry5 value="intTargetColumnNumber" />
-  <WatchEntry6 value="strColumnName" />
-</Properties>

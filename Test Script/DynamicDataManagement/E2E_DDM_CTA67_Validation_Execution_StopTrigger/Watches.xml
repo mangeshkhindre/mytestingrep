@@ -1,7 +1,0 @@
-﻿<Properties>
-  <WatchEntry0 value="strClientId" />
-  <WatchEntry1 value="sysType" />
-  <WatchEntry2 value="strURL" />
-  <WatchEntry3 value="objDesc" />
-  <WatchEntry4 value="objType" />
-</Properties>

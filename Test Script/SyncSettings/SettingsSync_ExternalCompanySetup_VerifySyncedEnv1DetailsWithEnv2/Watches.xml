@@ -1,7 +1,0 @@
-﻿<Properties>
-  <WatchEntry0 value="strTpoFee" />
-  <WatchEntry1 value="strTpoFeeAmount" />
-  <WatchEntry2 value="FRM_DS_GetValue(objData, &quot;TPOFeeAmount&quot;)" />
-  <WatchEntry3 value="InStr(strTpoFeeAmount,FRM_DS_GetValue(objData, &quot;TPOFeeAmount&quot;))&gt;0" />
-  <WatchEntry4 value="strTpoFeeAmount" />
-</Properties>

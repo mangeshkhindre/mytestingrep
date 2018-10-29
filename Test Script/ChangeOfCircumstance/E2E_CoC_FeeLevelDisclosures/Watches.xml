@@ -1,9 +1,0 @@
-﻿<Properties>
-  <WatchEntry0 value="objScrollBar.exist" />
-  <WatchEntry1 value="intColNumOrText" />
-  <WatchEntry2 value="strSearchText" />
-  <WatchEntry3 value="hasTitleRow" />
-  <WatchEntry4 value="hasFilterRow" />
-  <WatchEntry5 value="hasCheckboxCol" />
-  <WatchEntry6 value="intPosition" />
-</Properties>

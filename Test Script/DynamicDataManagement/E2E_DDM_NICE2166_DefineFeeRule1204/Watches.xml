@@ -1,6 +1,0 @@
-﻿<Properties>
-  <WatchEntry0 value="strCityTaxDec" />
-  <WatchEntry1 value="arrCityTaxDesc(1)" />
-  <WatchEntry2 value="FormatNumber(cityTax)" />
-  <WatchEntry3 value="FormatNumber(arrCityTax(1))" />
-</Properties>

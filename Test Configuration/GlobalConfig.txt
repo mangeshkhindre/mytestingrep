@@ -1,4 +1,0 @@
-[Environment]
-testPlatform=SmartClient
-Logger.level=Info
-BatchFileSize=2
